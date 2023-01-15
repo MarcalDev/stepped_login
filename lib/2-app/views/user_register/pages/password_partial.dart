@@ -13,7 +13,7 @@ class _password_partialState extends State<password_partial> {
     return Container(
       child: Center(
         child: Text(
-            "Coming soon"),
+            "Second"),
       ),
     );
   }

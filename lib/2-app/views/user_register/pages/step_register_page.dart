@@ -12,7 +12,7 @@ class step_register_page extends StatefulWidget {
 
 class _step_register_pageState extends State<step_register_page> {
 
-  late int _partialIndex = 1;
+  late int _partialIndex = 0;
 
   List<Widget> partialsList = [
     const basic_data_partial(), 
@@ -28,6 +28,7 @@ class _step_register_pageState extends State<step_register_page> {
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               child: partialsList[_partialIndex],
@@ -35,18 +36,14 @@ class _step_register_pageState extends State<step_register_page> {
           ],
         ),
         ),
-        bottomNavigationBar: Row(
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.fromLTRB(32,0,32,32),
+          child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButton(
-              onPressed: (){
-                setState(() {
-                  _partialIndex = _partialIndex + 1;   
-                });
-                print(_partialIndex.toString());
-              }, 
-              child: Text("Avançar")
-              ),
-              TextButton(
+            (_partialIndex >0)
+            ? TextButton(
               onPressed: (){
                 setState(() {
                   _partialIndex = _partialIndex - 1;                  
@@ -54,9 +51,20 @@ class _step_register_pageState extends State<step_register_page> {
                 print(_partialIndex.toString());
               }, 
               child: Text("Anterior")
-              ),
+              ) : const Text(""),
+            (_partialIndex < 2)
+            ? TextButton(
+              onPressed: (){
+                setState(() {
+                  _partialIndex = _partialIndex + 1;   
+                });
+                print(_partialIndex.toString());
+              }, 
+              child: Text("Avançar")
+              ) : const Text(""),
           ]
           ),
+          )
     );
   }
 }

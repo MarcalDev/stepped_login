@@ -10,12 +10,11 @@ class basic_data_partial extends StatefulWidget {
 class _basic_data_partialState extends State<basic_data_partial> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: const <Widget>[
-          Text(
-            "AAAAA"
-          )
-        ],
-      );
+    return Container(
+      child: Center(
+        child: Text(
+            "First"),
+      ),
+    );
   }
 }

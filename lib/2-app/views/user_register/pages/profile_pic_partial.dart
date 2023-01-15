@@ -13,7 +13,7 @@ class _profile_pic_partialState extends State<profile_pic_partial> {
      return Container(
       child: Center(
         child: Text(
-            "Coming soon"),
+            "Third"),
       ),
     );
   }
