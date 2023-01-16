@@ -10,11 +10,23 @@ class profile_pic_partial extends StatefulWidget {
 class _profile_pic_partialState extends State<profile_pic_partial> {
   @override
   Widget build(BuildContext context) {
-     return Container(
-      child: Center(
-        child: Text(
-            "Third"),
-      ),
-    );
+     return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text("Selecione sua foto de perfil"),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0,35,0,20),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage("https://miro.medium.com/max/1400/1*g09N-jl7JtVjVZGcd-vL2g.jpeg"),
+                radius: 100,
+                )
+              ),            
+            Text("Pular"),
+          ],
+        )
+      );
+    
   }
 }

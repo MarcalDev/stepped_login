@@ -7,4 +7,12 @@ void main() => runApp(
     MaterialApp(
         home: step_register_page(),
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          secondaryHeaderColor: const Color(0xff62C185), 
+          primaryColor: const Color(0xff62C185), 
+          hintColor: const Color(0xff62C185),
+          focusColor: const Color(0xff62C185),
+          hoverColor: const Color(0xff62C185),
+          indicatorColor: const Color(0xff62C185),
+          ),
 ));
