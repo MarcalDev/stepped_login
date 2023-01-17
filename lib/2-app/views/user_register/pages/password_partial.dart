@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stepped_login/2-app/components/text_field_widget.dart';
 
 class password_partial extends StatefulWidget {
   const password_partial({Key? key}) : super(key: key);
@@ -22,51 +23,10 @@ class _password_partialState extends State<password_partial> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-              child: TextField(       
-                keyboardType: TextInputType.visiblePassword,    
-                obscureText: _show_first_password,   
-                decoration: InputDecoration(
-                labelText: "Digite sua senha" ,
-                border: const OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  onPressed: (){
-                    setState(() {
-                      _show_first_password = !_show_first_password;
-                    });
-                  }, 
-                  icon: Icon(
-                    _show_first_password
-                    ? Icons.visibility_off
-                    : Icons.visibility
-                  )
-                  )
-              ),
-              controller: _password_controller,
-            ),
-            ),            
-            TextField(  
-              keyboardType: TextInputType.visiblePassword,  
-              obscureText: _show_second_password,   
-                        
-              decoration: InputDecoration(                
-                labelText: "Repita a senha" ,
-                border: const OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  onPressed: (){
-                    setState(() {
-                      _show_second_password = !_show_second_password;
-                    });
-                  }, 
-                  icon: Icon(
-                    _show_second_password
-                    ? Icons.visibility_off
-                    : Icons.visibility
-                  )
-                  )
-              ),
-              controller: _second_password_controller,              
-            ),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+              child: text_field_widget(editing_controller: _password_controller, hint_text: "Digite sua senha*",isPassword: true),              
+            ),      
+            text_field_widget(editing_controller: _second_password_controller, hint_text: "Repita a senha*",isPassword: true, isLastField: true),                  
           ],
         )
       ),

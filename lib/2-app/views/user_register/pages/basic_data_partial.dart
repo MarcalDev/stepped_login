@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stepped_login/2-app/components/text_field_widget.dart';
 
 class basic_data_partial extends StatefulWidget {
   const basic_data_partial({Key? key}) : super(key: key);
@@ -17,59 +18,32 @@ class _basic_data_partialState extends State<basic_data_partial> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(0),
-      child: Center(
-        child: Column(
-          
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [          
-            TextField(              
-              decoration: const InputDecoration(
-                labelText: "Digite seu nome" ,
-                border: OutlineInputBorder(),
-              ),
-              controller: _name_controller,
-            ),
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            text_field_widget(editing_controller: _name_controller, hint_text: "Digite seu nome*"),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-              child: TextField(
-                decoration: const InputDecoration(
-                labelText: "Digite seu e-mail" ,
-                border: OutlineInputBorder(),
-              ),
-              controller: _email_controller,
-            )
-            ),            
+              child: text_field_widget(editing_controller: _email_controller, hint_text: "Digite seu e-mail*", isEmail: true,)
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                     width: 70,
                     padding: const EdgeInsets.all(0),
-                    child: TextField(  
-                      decoration: const InputDecoration(                    
-                      labelText: "DDD" ,
-                      border: OutlineInputBorder(),
-                      ),
-                      controller: _phone_area_controller,
-                    )       
+                    child: text_field_widget(editing_controller: _phone_area_controller, hint_text: "DDD ",isPhoneArea: true)  
                   ),
                 Container(
                     width: 265,
                     padding: const EdgeInsets.all(0),
-                    child:  TextField(
-                    decoration: const InputDecoration(
-                      labelText: "Celular" ,
-                      border: OutlineInputBorder(),
-                    ),
-                    controller: _phone_number_controller,
-                  ),
-                  
-                )            
+                    child: text_field_widget(editing_controller: _phone_number_controller, hint_text: "Celular",isPhoneNumber: true, isLastField: true,),
+                )
             ],
             )
           ],
           )
-      ),
     );
   }
 }
