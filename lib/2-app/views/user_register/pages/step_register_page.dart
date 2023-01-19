@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stepped_login/2-app/views/user_register/pages/basic_data_partial.dart';
-import 'package:stepped_login/2-app/views/user_register/pages/password_partial.dart';
-import 'package:stepped_login/2-app/views/user_register/pages/profile_pic_partial.dart';
+import 'package:stepped_login/2-app/controllers/register_controller.dart';
+import 'package:get/get.dart';
 
 class step_register_page extends StatefulWidget {
   const step_register_page({Key? key}) : super(key: key);
@@ -19,11 +18,15 @@ class _step_register_pageState extends State<step_register_page> {
   int _primary_color = 0xff3B935F;
   int _second_color = 0xff99D7B0;
 
-  List<Widget> partialsList = [
-    const basic_data_partial(), 
-    const password_partial(), 
-    const profile_pic_partial()
-    ];
+  // List<Widget> partialsList = [
+  //   const basic_data_partial(), 
+  //   const password_partial(), 
+  //   const profile_pic_partial()
+  //   ];
+
+  register_controller controller = Get.put(register_controller());
+  PageController pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     //print(_partialIndex.toString());
@@ -34,7 +37,7 @@ class _step_register_pageState extends State<step_register_page> {
         padding: const EdgeInsets.all(32),
         child: SingleChildScrollView(
             child: Column(
-              children: [
+              children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 30, 0, 50),
                     child: LinearProgressIndicator(
@@ -61,16 +64,36 @@ class _step_register_pageState extends State<step_register_page> {
                         )
                     ),
                     const Padding(
-                        padding: EdgeInsets.fromLTRB(0, 50, 0, 45),
+                        padding: EdgeInsets.fromLTRB(0, 45, 0, 30),
                         child: Text("Preencha as informações abaixo:")
                     ),
                   ],
                 ): Container(),
+                
+                Padding(
+                  padding: (_partialIndex == 2) ? EdgeInsets.only(top: 70) : EdgeInsets.all(0),
+                  child: Container(
+                  height: 300,                  
+                  padding: EdgeInsets.all(0),
+                  child: PageView(                  
+                  scrollDirection: Axis.horizontal,
+                  pageSnapping: false,
+                  physics: NeverScrollableScrollPhysics(),
+                  controller: pageController,
+                  children: <Widget>[
+                    controller.firstPage,
+                    controller.secondPage,
+                    controller.thirdPage
+                  ],
+                )
+                )        
+                )
+                       
 
-                Container(
-                      alignment: (_partialIndex > 1) ? AlignmentDirectional.center : AlignmentDirectional.topStart,
-                      child: partialsList[_partialIndex],
-                )           
+                // Container(
+                //       alignment: (_partialIndex > 1) ? AlignmentDirectional.center : AlignmentDirectional.topStart,
+                //       child: partialsList[_partialIndex],
+                // )           
               ],
             ),
           )
@@ -90,7 +113,7 @@ class _step_register_pageState extends State<step_register_page> {
                   _show_step_icon = (_partialIndex <= 1) ? true : false;
                   _actual_step_icon = (_partialIndex < 1) ? "images/clipboard_image.png" : "images/lock_image.png"; 
                 });
-                
+                pageController.jumpToPage(_partialIndex);
                 //print(_partialIndex.toString());
               }, 
               child: Text(
@@ -109,7 +132,7 @@ class _step_register_pageState extends State<step_register_page> {
                   _show_step_icon = (_partialIndex == 2) ? false : true;
                   _actual_step_icon = (_partialIndex >= 1) ? "images/lock_image.png" : "images/clipboard_image.png";
                 });
-                
+                pageController.jumpToPage(_partialIndex);
                 //print(_partialIndex.toString());
               }, 
               child: Text(

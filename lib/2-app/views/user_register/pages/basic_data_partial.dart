@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stepped_login/2-app/components/text_field_widget.dart';
+import 'package:stepped_login/2-app/controllers/register_controller.dart';
+import 'package:get/get.dart';
 
 class basic_data_partial extends StatefulWidget {
   const basic_data_partial({Key? key}) : super(key: key);
@@ -9,10 +11,8 @@ class basic_data_partial extends StatefulWidget {
 }
 
 class _basic_data_partialState extends State<basic_data_partial> {
-  TextEditingController _email_controller = TextEditingController();
-  TextEditingController _name_controller = TextEditingController();
-  TextEditingController _phone_area_controller = TextEditingController();
-  TextEditingController _phone_number_controller = TextEditingController();
+  
+  register_controller _register_controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,10 @@ class _basic_data_partialState extends State<basic_data_partial> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            text_field_widget(editing_controller: _name_controller, hint_text: "Digite seu nome*"),
+            text_field_widget(editing_controller: _register_controller.name_controller, hint_text: "Digite seu nome*",on_changed: _register_controller.setName),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-              child: text_field_widget(editing_controller: _email_controller, hint_text: "Digite seu e-mail*", isEmail: true,)
+              child: text_field_widget(editing_controller: _register_controller.email_controller, hint_text: "Digite seu e-mail*", isEmail: true,on_changed: _register_controller.setEmail)
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,12 +33,12 @@ class _basic_data_partialState extends State<basic_data_partial> {
                 Container(
                     width: 70,
                     padding: const EdgeInsets.all(0),
-                    child: text_field_widget(editing_controller: _phone_area_controller, hint_text: "DDD ",isPhoneArea: true)  
+                    child: text_field_widget(editing_controller: _register_controller.phone_area_controller, hint_text: "DDD ",isPhoneArea: true, on_changed: _register_controller.setPhoneArea)  
                   ),
                 Container(
                     width: 265,
                     padding: const EdgeInsets.all(0),
-                    child: text_field_widget(editing_controller: _phone_number_controller, hint_text: "Celular",isPhoneNumber: true, isLastField: true,),
+                    child: text_field_widget(editing_controller: _register_controller.phone_number_controller, hint_text: "Celular",isPhoneNumber: true, isLastField: true, on_changed: _register_controller.setPhoneNumber),
                 )
             ],
             )

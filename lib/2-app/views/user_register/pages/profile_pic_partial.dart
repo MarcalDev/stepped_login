@@ -11,15 +11,15 @@ class _profile_pic_partialState extends State<profile_pic_partial> {
   @override
   Widget build(BuildContext context) {
      return Padding(
-      padding: EdgeInsets.only(top: 60),
+      padding: EdgeInsets.all(0),
       child: Center(
-        child: Column(
+        child: Column(          
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: const [
             Text("Selecione sua foto de perfil"),
             Padding(
-              padding: EdgeInsets.fromLTRB(0,45,0,20),
+              padding: EdgeInsets.fromLTRB(0,45,0,0),
               child: CircleAvatar(
                 backgroundImage: NetworkImage("https://miro.medium.com/max/1400/1*g09N-jl7JtVjVZGcd-vL2g.jpeg"),
                 radius: 100,
