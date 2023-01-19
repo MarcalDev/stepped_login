@@ -40,13 +40,24 @@ class _step_register_pageState extends State<step_register_page> {
               children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 30, 0, 50),
-                    child: LinearProgressIndicator(
-                      minHeight: 10,
-                      value: _progress_value,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Color(_primary_color)),
-                      backgroundColor: Color(_second_color),
-                    )
+                    child: 
+                    TweenAnimationBuilder<double>(
+                        duration: const Duration(milliseconds: 650),
+                        curve: Curves.easeInOut,
+                        tween: Tween<double>(
+                            begin: 0,
+                            end: _progress_value,
+                        ),
+                        builder: (context, value, _) =>
+                            LinearProgressIndicator(minHeight: 8,value: value,backgroundColor: Color(_second_color),valueColor: AlwaysStoppedAnimation<Color>(Color(_primary_color))),
+                    ),
+                    // LinearProgressIndicator(
+                    //   minHeight: 10,
+                    //   value: _progress_value,
+                    //   valueColor: AlwaysStoppedAnimation<Color>(
+                    //       Color(_primary_color)),
+                    //   backgroundColor: Color(_second_color),
+                    //)
                 ),
                 (_show_step_icon)
                     ? Column(
