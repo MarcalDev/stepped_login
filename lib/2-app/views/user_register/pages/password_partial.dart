@@ -21,9 +21,9 @@ class _password_partialState extends State<password_partial> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-              child: text_field_widget(editing_controller: _register_controller.password_controller, hint_text: "Digite sua senha*",isPassword: true, on_changed: _register_controller.setPassword),              
+              child: text_field_widget(editing_controller: _register_controller.password_controller, hint_text: "Digite sua senha*",isPassword: true),              
             ),      
-            text_field_widget(editing_controller: _register_controller.second_password_controller, hint_text: "Repita a senha*",isPassword: true, isLastField: true, on_changed: _register_controller.setSecondPassword),                  
+            text_field_widget(editing_controller: _register_controller.second_password_controller, hint_text: "Repita a senha*",isPassword: true, isLastField: true),                  
           ],
         )
       ),

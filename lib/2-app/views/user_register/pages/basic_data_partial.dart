@@ -22,10 +22,10 @@ class _basic_data_partialState extends State<basic_data_partial> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            text_field_widget(editing_controller: _register_controller.name_controller, hint_text: "Digite seu nome*",on_changed: _register_controller.setName),
+            text_field_widget(editing_controller: _register_controller.name_controller, hint_text: "Digite seu nome*"),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-              child: text_field_widget(editing_controller: _register_controller.email_controller, hint_text: "Digite seu e-mail*", isEmail: true,on_changed: _register_controller.setEmail)
+              child: text_field_widget(editing_controller: _register_controller.email_controller, hint_text: "Digite seu e-mail*", isEmail: true)
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,12 +33,12 @@ class _basic_data_partialState extends State<basic_data_partial> {
                 Container(
                     width: 70,
                     padding: const EdgeInsets.all(0),
-                    child: text_field_widget(editing_controller: _register_controller.phone_area_controller, hint_text: "DDD ",isPhoneArea: true, on_changed: _register_controller.setPhoneArea)  
+                    child: text_field_widget(editing_controller: _register_controller.phone_area_controller, hint_text: "DDD ",isPhoneArea: true)  
                   ),
                 Container(
                     width: 265,
                     padding: const EdgeInsets.all(0),
-                    child: text_field_widget(editing_controller: _register_controller.phone_number_controller, hint_text: "Celular",isPhoneNumber: true, isLastField: true, on_changed: _register_controller.setPhoneNumber),
+                    child: text_field_widget(editing_controller: _register_controller.phone_number_controller, hint_text: "Celular",isPhoneNumber: true, isLastField: true),
                 )
             ],
             )

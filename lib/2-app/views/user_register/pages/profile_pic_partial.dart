@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stepped_login/2-app/views/user_register/widgets/pick_picture_popup.dart';
 
 import '../../../controllers/register_controller.dart';
 
@@ -29,7 +30,8 @@ class _profile_pic_partialState extends State<profile_pic_partial> {
               padding: EdgeInsets.fromLTRB(0,45,0,0),
               child: Obx(
                 () => GestureDetector(
-                onTap: () => _register_controller.TakePicture(true),
+                onTap: (){showDialog(context: context, builder: (BuildContext context) {return PickPicturePopup();});
+                },
                 child: (_register_controller.showPicture.value)
               ?  CircleAvatar(
                       backgroundImage:  FileImage(File(_register_controller.profilePicturePath.value)),

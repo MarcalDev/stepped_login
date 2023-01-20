@@ -10,7 +10,6 @@ class text_field_widget extends StatefulWidget {
     this.isPhoneArea = false,
     this.isEmail = false,
     this.isLastField = false,
-    required this.on_changed,
     super.key
     });
     String hint_text = "";
@@ -20,7 +19,6 @@ class text_field_widget extends StatefulWidget {
     bool isPhoneArea;
     bool isEmail;
     bool isLastField;
-    dynamic Function(String) on_changed;
 
 
 
@@ -74,8 +72,7 @@ class _text_field_widgetState extends State<text_field_widget> {
       inputFormatters: (widget.isPhoneNumber)? [phoneFormatter] : ((widget.isPhoneArea) ? [phoneAreaFormatter] : []),
       cursorColor: Color(0xff3C4048),
       textAlign: (widget.isPhoneArea) ? TextAlign.center : TextAlign.left,
-      textInputAction: (widget.isLastField) ? TextInputAction.done : TextInputAction.next,
-      onChanged: ((value) => widget.on_changed),   
+      textInputAction: (widget.isLastField) ? TextInputAction.done : TextInputAction.next,        
     );
   }
 }

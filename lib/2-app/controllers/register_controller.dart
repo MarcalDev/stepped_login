@@ -6,62 +6,37 @@ import 'package:stepped_login/2-app/views/user_register/pages/basic_data_partial
 import 'package:stepped_login/2-app/views/user_register/pages/password_partial.dart';
 import 'package:stepped_login/2-app/views/user_register/pages/profile_pic_partial.dart';
 class register_controller extends GetxController{
-  String? _email;
-  setEmail(String value) => _email = value;
 
-  String? _name;
-  setName(String value) => _name = value;
-
-  String? _phoneArea;
-  setPhoneArea(String value) => _phoneArea = value;
-
-  String? _phoneNumber;
-  setPhoneNumber(String value) => _phoneNumber = value;
-
-  String? _password;
-  setPassword(String value) => _password = value;
-
-  String? _second_password;
-  setSecondPassword(String value) => _second_password = value;
-
-  // bool? showPicture = false;
-  // setShowPicture(bool value) => showPicture = value;
-
-  File? profilePicture;
-  setProfilePicture(File value) => (profilePicture = value).obs;
-
-  // basic data
-  TextEditingController email_controller = TextEditingController();
-
-  TextEditingController name_controller = TextEditingController();
-
-  TextEditingController phone_area_controller = TextEditingController();
-
-  TextEditingController phone_number_controller = TextEditingController();
-
-  // password
-  TextEditingController password_controller = TextEditingController();
-
-  TextEditingController second_password_controller = TextEditingController();
-
-  // step partials
-  basic_data_partial firstPage = basic_data_partial();
-  password_partial secondPage = password_partial();
-  profile_pic_partial thirdPage = profile_pic_partial();
-
-  // profile picture
+  late TextEditingController email_controller;
+  late TextEditingController name_controller;
+  late TextEditingController phone_area_controller;
+  late TextEditingController phone_number_controller;
+  late TextEditingController password_controller;
+  late TextEditingController second_password_controller;
   late RxString profilePicturePath;
   late RxBool showPicture;
+  late basic_data_partial firstPage;
+  late password_partial secondPage;
+  late profile_pic_partial thirdPage;
+  
 
   register_controller(){
     _initializeVariables();
   }
 
   _initializeVariables(){
+    email_controller = TextEditingController();
+    name_controller = TextEditingController();
+    phone_area_controller = TextEditingController();
+    phone_number_controller = TextEditingController();
+    password_controller = TextEditingController();
+    second_password_controller = TextEditingController();
     profilePicturePath = "".obs;
     showPicture = false.obs;
+    firstPage = basic_data_partial();
+    secondPage = password_partial();
+    thirdPage = profile_pic_partial();
   }
-
 
   Future TakePicture(bool OpenCamera) async{
     PickedFile? selectedFile; 
