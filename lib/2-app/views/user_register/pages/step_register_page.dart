@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stepped_login/2-app/controllers/register_controller.dart';
 import 'package:get/get.dart';
+import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
 
 class step_register_page extends StatefulWidget {
   const step_register_page({Key? key}) : super(key: key);
@@ -15,15 +16,6 @@ class _step_register_pageState extends State<step_register_page> {
   late int _partialIndex = 0;
   bool _show_step_icon = true;
   String _actual_step_icon = "images/clipboard_image.png";
-  int _primary_color = 0xff3B935F;
-  int _second_color = 0xff99D7B0;
-
-  // List<Widget> partialsList = [
-  //   const basic_data_partial(), 
-  //   const password_partial(), 
-  //   const profile_pic_partial()
-  //   ];
-
   register_controller controller = Get.put(register_controller());
   PageController pageController = PageController();
 
@@ -49,7 +41,7 @@ class _step_register_pageState extends State<step_register_page> {
                             end: _progress_value,
                         ),
                         builder: (context, value, _) =>
-                            LinearProgressIndicator(minHeight: 8,value: value,backgroundColor: Color(_second_color),valueColor: AlwaysStoppedAnimation<Color>(Color(_primary_color))),
+                            LinearProgressIndicator(minHeight: 8,value: value,backgroundColor: AppColors.secondaryColor,valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryColor)),
                     ),
                     // LinearProgressIndicator(
                     //   minHeight: 10,
@@ -68,7 +60,7 @@ class _step_register_pageState extends State<step_register_page> {
                           height: 150,
                           margin: const EdgeInsets.all(0),
                           decoration: BoxDecoration(
-                              color: const Color(0xff62C185),
+                              color: AppColors.thirdColor,
                               shape: BoxShape.circle,
                               image: DecorationImage(image: AssetImage(_actual_step_icon))
                           ),
@@ -130,7 +122,7 @@ class _step_register_pageState extends State<step_register_page> {
               child: Text(
                       "Anterior",
                       style: TextStyle(
-                        color: Color(_primary_color)
+                        color: AppColors.primaryColor
                       ),
                       )
               ) : const Text(""),
@@ -149,7 +141,7 @@ class _step_register_pageState extends State<step_register_page> {
               child: Text(
                       "Avançar",
                       style: TextStyle(
-                        color: Color(_primary_color)),
+                        color: AppColors.primaryColor),
                       )
               ) : const Text(""),
           ]

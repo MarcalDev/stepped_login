@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
 
 class text_field_widget extends StatefulWidget {
     text_field_widget({
@@ -44,14 +45,14 @@ class _text_field_widgetState extends State<text_field_widget> {
     return TextField(
       decoration: InputDecoration(        
         hintText: (!widget.isPhoneArea && !widget.isPhoneNumber) ? widget.hint_text : ((widget.isPhoneArea)? "(00)" : "9999-999"),
-        hintStyle: TextStyle(color: Color(0xffB2B2B2)),
+        hintStyle: TextStyle(color: AppColors.inputHintColor),
         enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10)), borderSide: BorderSide(color: Colors.transparent)),
         focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10)), borderSide: BorderSide(color: Colors.transparent)),
-        fillColor: Color(0xffEAEAEA),
+        fillColor: AppColors.inputBackgroundColor,
         filled:true,
-        hoverColor: Color(0xffEAEAEA),
+        hoverColor: AppColors.inputBackgroundColor,
         floatingLabelBehavior: FloatingLabelBehavior.never,
-        labelStyle: TextStyle(color: Color(0xff3C4048)),
+        labelStyle: TextStyle(color: AppColors.inputTextColor),
         suffixIcon: (widget.isPassword)
                     ? IconButton(
                       onPressed: (){
@@ -70,7 +71,7 @@ class _text_field_widgetState extends State<text_field_widget> {
       obscureText: (widget.isPassword) ?  _show_password : false,   
       controller: widget.editing_controller,
       inputFormatters: (widget.isPhoneNumber)? [phoneFormatter] : ((widget.isPhoneArea) ? [phoneAreaFormatter] : []),
-      cursorColor: Color(0xff3C4048),
+      cursorColor: AppColors.inputTextColor,
       textAlign: (widget.isPhoneArea) ? TextAlign.center : TextAlign.left,
       textInputAction: (widget.isLastField) ? TextInputAction.done : TextInputAction.next,        
     );
