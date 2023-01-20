@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   mask_text_input_formatter: ^2.4.0
   get: ^4.6.5
+  image_picker: ^0.8.6
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
   assets:
     - images/clipboard_image.png
     - images/lock_image.png
+    - images/icon_user.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
