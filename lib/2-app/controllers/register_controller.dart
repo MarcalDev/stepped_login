@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:stepped_login/2-app/views/user_register/pages/basic_data_partial.dart';
-import 'package:stepped_login/2-app/views/user_register/pages/password_partial.dart';
-import 'package:stepped_login/2-app/views/user_register/pages/profile_pic_partial.dart';
-class register_controller extends GetxController{
+import 'package:stepped_login/2-app/views/user_register/widgets/basic_data_partial.dart';
+import 'package:stepped_login/2-app/views/user_register/widgets/password_partial.dart';
+import 'package:stepped_login/2-app/views/user_register/widgets/profile_pic_partial.dart';
+class RegisterController extends GetxController{
 
   late TextEditingController email_controller;
   late TextEditingController name_controller;
@@ -15,12 +15,12 @@ class register_controller extends GetxController{
   late TextEditingController second_password_controller;
   late RxString profilePicturePath;
   late RxBool showPicture;
-  late basic_data_partial firstPage;
-  late password_partial secondPage;
-  late profile_pic_partial thirdPage;
+  late BasicDataPartial firstPage;
+  late PasswordPartial secondPage;
+  late ProfilePicPartial thirdPage;
   
 
-  register_controller(){
+  RegisterController(){
     _initializeVariables();
   }
 
@@ -33,9 +33,9 @@ class register_controller extends GetxController{
     second_password_controller = TextEditingController();
     profilePicturePath = "".obs;
     showPicture = false.obs;
-    firstPage = basic_data_partial();
-    secondPage = password_partial();
-    thirdPage = profile_pic_partial();
+    firstPage = BasicDataPartial();
+    secondPage = PasswordPartial();
+    thirdPage = ProfilePicPartial();
   }
 
   Future TakePicture(bool OpenCamera) async{

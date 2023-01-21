@@ -2,19 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stepped_login/2-app/views/user_register/widgets/pick_picture_popup.dart';
+import 'package:stepped_login/2-app/views/popups/pick_picture_popup.dart';
 
 import '../../../controllers/register_controller.dart';
 
-class profile_pic_partial extends StatefulWidget {
-  const profile_pic_partial({Key? key}) : super(key: key);
+class ProfilePicPartial extends StatefulWidget {
+  const ProfilePicPartial({Key? key}) : super(key: key);
 
   @override
-  State<profile_pic_partial> createState() => _profile_pic_partialState();
+  State<ProfilePicPartial> createState() => _ProfilePicPartialState();
 }
 
-class _profile_pic_partialState extends State<profile_pic_partial> {
-  register_controller _register_controller = Get.find();
+class _ProfilePicPartialState extends State<ProfilePicPartial> {
+  RegisterController _register_controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

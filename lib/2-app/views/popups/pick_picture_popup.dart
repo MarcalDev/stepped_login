@@ -12,7 +12,7 @@ class PickPicturePopup extends StatefulWidget {
 
 class _PickPicturePopupState extends State<PickPicturePopup> {
 
-  register_controller Controller = Get.find();
+  RegisterController Controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

@@ -3,20 +3,20 @@ import 'package:stepped_login/2-app/controllers/register_controller.dart';
 import 'package:get/get.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
 
-class step_register_page extends StatefulWidget {
-  const step_register_page({Key? key}) : super(key: key);
+class StepRegisterPage extends StatefulWidget {
+  const StepRegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<step_register_page> createState() => _step_register_pageState();
+  State<StepRegisterPage> createState() => _StepRegisterPageState();
 }
 
-class _step_register_pageState extends State<step_register_page> {
+class _StepRegisterPageState extends State<StepRegisterPage> {
 
   double _progress_value = 0.0;
   late int _partialIndex = 0;
   bool _show_step_icon = true;
   String _actual_step_icon = "images/clipboard_image.png";
-  register_controller controller = Get.put(register_controller());
+  RegisterController controller = Get.put(RegisterController());
   PageController pageController = PageController();
 
   @override
