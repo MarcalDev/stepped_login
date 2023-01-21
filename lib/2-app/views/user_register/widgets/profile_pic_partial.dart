@@ -42,8 +42,7 @@ class _ProfilePicPartialState extends State<ProfilePicPartial> {
                 backgroundImage:  AssetImage('images/icon_user.jpeg'),
                 radius: 100,
                 )              
-              )   
-              
+              )                 
               )
               )  ,    
             const Text("Pular"),

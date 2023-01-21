@@ -19,7 +19,8 @@ class LoginController extends GetxController{
   }
 
   PushToRegisterPage(){
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => StepRegisterPage()));
+    //Navigator.of(context).push(MaterialPageRoute(builder: (context) => StepRegisterPage()));
     //Navigator.push(context, MaterialPageRoute(builder: (context) => StepRegisterPage()));
+    Get.to(StepRegisterPage());  
   }
 }

@@ -15,13 +15,12 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
   double _progress_value = 0.0;
   late int _partialIndex = 0;
   bool _show_step_icon = true;
-  String _actual_step_icon = "images/clipboard_image.png";
-  RegisterController controller = Get.put(RegisterController());
+  String _actual_step_icon = "images/clipboard_image.png";  
   PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
-    //print(_partialIndex.toString());
+    RegisterController Controller = Get.put(RegisterController(context: context));
     return Scaffold(
       extendBodyBehindAppBar: false,
       backgroundColor: Colors.white,
@@ -84,19 +83,13 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
                   physics: NeverScrollableScrollPhysics(),
                   controller: pageController,
                   children: <Widget>[
-                    controller.firstPage,
-                    controller.secondPage,
-                    controller.thirdPage
+                    Controller.firstPage,
+                    Controller.secondPage,
+                    Controller.thirdPage
                   ],
                 )
                 )        
-                )
-                       
-
-                // Container(
-                //       alignment: (_partialIndex > 1) ? AlignmentDirectional.center : AlignmentDirectional.topStart,
-                //       child: partialsList[_partialIndex],
-                // )           
+                ) 
               ],
             ),
           )
@@ -107,7 +100,7 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            (_partialIndex >0)
+            (_partialIndex != 0)
             ? TextButton(
               onPressed: (){
                 setState(() {
@@ -117,15 +110,13 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
                   _actual_step_icon = (_partialIndex < 1) ? "images/clipboard_image.png" : "images/lock_image.png"; 
                 });
                 pageController.jumpToPage(_partialIndex);
-                //print(_partialIndex.toString());
               }, 
-              child: Text(
-                      "Anterior",
-                      style: TextStyle(
-                        color: AppColors.primaryColor
-                      ),
-                      )
-              ) : const Text(""),
+              child: Text("Anterior",style: TextStyle(color: AppColors.primaryColor))) 
+              : TextButton(
+              onPressed: ()=> Get.back(), 
+              child: Text("Cancelar",style: TextStyle(color: AppColors.inputTextColor))
+              ),
+              
             (_partialIndex < 2)
             ? TextButton(
               onPressed: (){

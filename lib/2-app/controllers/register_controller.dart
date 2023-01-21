@@ -7,6 +7,7 @@ import 'package:stepped_login/2-app/views/user_register/widgets/password_partial
 import 'package:stepped_login/2-app/views/user_register/widgets/profile_pic_partial.dart';
 class RegisterController extends GetxController{
 
+  late BuildContext context;
   late TextEditingController email_controller;
   late TextEditingController name_controller;
   late TextEditingController phone_area_controller;
@@ -20,7 +21,7 @@ class RegisterController extends GetxController{
   late ProfilePicPartial thirdPage;
   
 
-  RegisterController(){
+  RegisterController({required this.context}){
     _initializeVariables();
   }
 
