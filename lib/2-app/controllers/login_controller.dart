@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stepped_login/1-base/services/user_service.dart';
+import 'package:stepped_login/2-app/views/home/home_page.dart';
 import 'package:stepped_login/2-app/views/user_register/pages/step_register_page.dart';
+
+import '../views/popups/error_popup.dart';
+import '../views/popups/pick_picture_popup.dart';
 
 class LoginController extends GetxController{
   late BuildContext context;
   late TextEditingController email_controller;
   late TextEditingController password_controller;
   late RxBool saveUserLogin;
+  late UserService userService;
 
   LoginController({required this.context}){
     _initializeVariables();
@@ -16,11 +22,20 @@ class LoginController extends GetxController{
     email_controller = TextEditingController();
     password_controller = TextEditingController();
     saveUserLogin = false.obs;
+    userService = UserService();
   }
 
   PushToRegisterPage(){
-    //Navigator.of(context).push(MaterialPageRoute(builder: (context) => StepRegisterPage()));
-    //Navigator.push(context, MaterialPageRoute(builder: (context) => StepRegisterPage()));
     Get.to(StepRegisterPage());  
+  }
+
+
+  loginUser() async{
+    var result = await userService.userAuthentication(email_controller.text, password_controller.text);
+    if(result != null){
+      Get.to(() => HomePage());  
+    }else{
+      showDialog(context: context, builder: (BuildContext context) {return ErrorPopup();});
+    }
   }
 }

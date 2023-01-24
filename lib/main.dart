@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stepped_login/2-app/views/login/pages/login_page.dart';
 
-void main() => runApp(
+void main() {
+  HttpOverrides.global = MyHttpOverrides();
+
+  runApp(
     GetMaterialApp(
         home: LoginPage(),
         debugShowCheckedModeBanner: false,
@@ -16,3 +21,11 @@ void main() => runApp(
           highlightColor: const Color(0xff62C185),
           ),
 ));
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+  }
+}

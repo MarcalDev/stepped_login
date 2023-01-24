@@ -17,8 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    LoginController Controller = Get.put(LoginController(context:  context));
-
+    LoginController Controller = Get.put(LoginController(context:  context));   
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -59,7 +58,17 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             padding: EdgeInsets.only(top: 120),
             width: double.infinity,
-            child: TextButtonWidget(text: 'ENTRAR',)
+            child: TextButton(
+              onPressed: () => Controller.loginUser(), 
+              child: Text("ENTRAR", style: AppTextStyles.buttonText),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(AppColors.thirdColor),
+                padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.fromLTRB(15, 10, 15, 10)),
+                textStyle: MaterialStateProperty.all<TextStyle>(AppTextStyles.buttonText), 
+                elevation: MaterialStateProperty.all<double>(0),
+                alignment: Alignment.center
+              ),
+              )
           )
           
         ],        
