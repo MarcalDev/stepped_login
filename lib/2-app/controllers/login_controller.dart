@@ -35,9 +35,9 @@ class LoginController extends GetxController{
     if(email_controller.text.isNotEmpty && password_controller.text.isNotEmpty){
       var result = await userService.userAuthentication(email_controller.text, password_controller.text);
       if(result != null){
-        Get.to(() => HomePage());  
+        Get.to(() => HomePage(user: result));  
       }else{
-        showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Email ou Senha incorreto(s)");});
+        showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Usuário ou Senha incorreto(s)");});
       }
     }else{
       showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Verifique os campos não preenchidos");});

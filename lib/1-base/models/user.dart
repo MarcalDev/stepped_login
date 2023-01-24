@@ -20,13 +20,13 @@ class User extends BaseModel{
 
   factory User.fromJson(Map<String, dynamic> map){
     return User(
-      id: map["Id"], 
-      name: map["Name"],
-      email: map["Email"], 
-      phoneNumber: map["PhoneNumber"], 
-      password: map["Password"], 
-      realeseDate: map["RealeaseDate"], 
-      isActive: map["IsActive"]);
+      id: map["id"], 
+      name: map["name"],
+      email: map["email"], 
+      phoneNumber: map["phoneNumber"], 
+      password: map["password"], 
+      realeseDate: map["realeaseDate"], 
+      isActive: map["isActive"]);
   }
 
   Map<String,dynamic> toJson(){
