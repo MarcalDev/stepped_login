@@ -11,6 +11,7 @@ import 'package:stepped_login/2-app/views/user_register/widgets/password_partial
 import 'package:stepped_login/2-app/views/user_register/widgets/profile_pic_partial.dart';
 import 'package:uuid/uuid.dart';
 
+import '../views/popups/success_popup.dart';
 import '../views/popups/two_options_popup.dart';
 class RegisterController extends GetxController{
 
@@ -86,16 +87,17 @@ class RegisterController extends GetxController{
     
     var result = await userService.postUser(user);
     if(result){
-      print("USUARIO INSERIDO");
-       Get.to(() => LoginPage());  
+      showDialog(context: context, builder: (BuildContext context) {return SuccessPopup(popupText: "Usuário cadastrado com sucesso!",);})
+      .then((_) => Navigator.of(context).popUntil((route) => route.isFirst));
+       
     }else{
-      print("USUARIO NAO INSERIDO");
-    }
+       showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Não foi possível cadastrar o usuário",);});
+    }   
   }
 
   insertUser() async{
     if(email_controller.text.isNotEmpty && name_controller.text.isNotEmpty && password_controller.text.isNotEmpty && second_password_controller.text.isNotEmpty){
-      postUser(); 
+      postUser();       
     }
     else{
       showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Verifique os campos não preenchidos",);});
