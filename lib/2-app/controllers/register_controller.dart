@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stepped_login/1-base/models/user.dart';
 import 'package:stepped_login/1-base/services/user_service.dart';
+import 'package:stepped_login/2-app/controllers/loading_indicator_dialog.dart';
 import 'package:stepped_login/2-app/views/login/pages/login_page.dart';
 import 'package:stepped_login/2-app/views/popups/error_popup.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/basic_data_partial.dart';
@@ -85,7 +86,9 @@ class RegisterController extends GetxController{
       realeseDate: null
     );
     
+    LoadingIndicatorDialog().show(context);
     var result = await userService.postUser(user);
+    LoadingIndicatorDialog().dismiss();
     if(result){
       showDialog(context: context, builder: (BuildContext context) {return SuccessPopup(popupText: "Usuário cadastrado com sucesso!",);})
       .then((_) => Navigator.of(context).popUntil((route) => route.isFirst));

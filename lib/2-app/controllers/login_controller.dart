@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:stepped_login/1-base/models/user.dart';
 import 'package:stepped_login/1-base/services/user_service.dart';
+import 'package:stepped_login/2-app/controllers/loading_indicator_dialog.dart';
 import 'package:stepped_login/2-app/views/home/home_page.dart';
 import 'package:stepped_login/2-app/views/user_register/pages/step_register_page.dart';
 import 'package:uuid/uuid.dart';
@@ -35,7 +36,9 @@ class LoginController extends GetxController{
 
   loginUser() async{
     if(email_controller.text.isNotEmpty && password_controller.text.isNotEmpty){
+      LoadingIndicatorDialog().show(context);
       var result = await userService.userAuthentication(email_controller.text, password_controller.text);
+      LoadingIndicatorDialog().dismiss();
       if(result != null){
         Get.to(() => HomePage(user: result));  
       }else{
