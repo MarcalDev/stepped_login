@@ -39,4 +39,27 @@ class UserService extends ServiceBase{
       return null;
     }
   }
+
+  Future<bool> postUser(User user) async{
+    try{
+        final response = await http.post(
+        Uri.parse(
+          "$baseUrl/api/User/Post"      
+        ),
+        headers: {"content-type" : "application/json"},
+        body: UsersToJson(user),
+      );
+
+      if(response.statusCode == 200){
+        return true;
+      }else{
+        return false;
+      }  
+
+    }catch(ex){
+      print("excessao: " + ex.toString());
+      return false;
+    }    
+
+  }
 }

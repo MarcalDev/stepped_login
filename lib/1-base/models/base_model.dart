@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:uuid/uuid.dart';
 
 abstract class BaseModel{
-  late UniqueKey? id;
+  late String? id;
   late bool? isActive;
-  late DateTime? realeseDate;
+  late String? realeseDate;
 
   BaseModel({this.id, this.isActive, this.realeseDate});
 }

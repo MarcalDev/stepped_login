@@ -5,7 +5,11 @@ import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_text_styles.dart';
 
 class ErrorPopup extends StatefulWidget {
-  const ErrorPopup({super.key});
+  ErrorPopup({
+    super.key,
+    required this.popupText
+    });
+    String popupText;
 
   @override
   State<ErrorPopup> createState() => _ErrorPopupState();
@@ -26,7 +30,10 @@ class _ErrorPopupState extends State<ErrorPopup> {
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          const Text("Email ou Senha incorreto(s)", style: AppTextStyles.textPopupTitle),
+          Padding(
+            padding: EdgeInsets.only(bottom: 20),
+            child: Text(widget.popupText, style: AppTextStyles.textPopupTitle, textAlign: TextAlign.center,) 
+            ),
           Container(
             padding: EdgeInsets.all(0),
             width: double.infinity,

@@ -16,7 +16,6 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
   late int _partialIndex = 0;
   bool _show_step_icon = true;
   String _actual_step_icon = "images/clipboard_image.png";  
-  PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,26 +30,21 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
               children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 30, 0, 50),
-                    child: 
-                    TweenAnimationBuilder<double>(
+                    child: Obx(
+                      () => TweenAnimationBuilder<double>(
                         duration: const Duration(milliseconds: 650),
                         curve: Curves.easeInOut,
                         tween: Tween<double>(
                             begin: 0,
-                            end: _progress_value,
+                            end: Controller.progressValue.value,
                         ),
                         builder: (context, value, _) =>
                             LinearProgressIndicator(minHeight: 8,value: value,backgroundColor: AppColors.secondaryColor,valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryColor)),
-                    ),
-                    // LinearProgressIndicator(
-                    //   minHeight: 10,
-                    //   value: _progress_value,
-                    //   valueColor: AlwaysStoppedAnimation<Color>(
-                    //       Color(_primary_color)),
-                    //   backgroundColor: Color(_second_color),
-                    //)
+                    ),                   
+                    )                    
                 ),
-                (_show_step_icon)
+                Obx(() => 
+                  (Controller.showStepIcon.value)
                     ? Column(
                   children: [
                     Padding(
@@ -61,7 +55,7 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
                           decoration: BoxDecoration(
                               color: AppColors.thirdColor,
                               shape: BoxShape.circle,
-                              image: DecorationImage(image: AssetImage(_actual_step_icon))
+                              image: DecorationImage(image: AssetImage(Controller.actualStepIcon.value))
                           ),
                         )
                     ),
@@ -70,10 +64,10 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
                         child: Text("Preencha as informações abaixo:")
                     ),
                   ],
-                ): Container(),
-                
+                ): Container(),                
+                ),
                 Padding(
-                  padding: (_partialIndex == 2) ? EdgeInsets.only(top: 70) : EdgeInsets.all(0),
+                  padding: (Controller.partialIndex.value == 2) ? EdgeInsets.only(top: 70) : EdgeInsets.all(0),
                   child: Container(
                   height: 300,                  
                   padding: EdgeInsets.all(0),
@@ -81,7 +75,7 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
                   scrollDirection: Axis.horizontal,
                   pageSnapping: false,
                   physics: NeverScrollableScrollPhysics(),
-                  controller: pageController,
+                  controller: Controller.pageController,
                   children: <Widget>[
                     Controller.firstPage,
                     Controller.secondPage,
@@ -96,20 +90,15 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.fromLTRB(32,0,32,32),
-          child: Row(
+          child: Obx(
+            () => Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            (_partialIndex != 0)
+            (Controller.partialIndex.value != 0)
             ? TextButton(
               onPressed: (){
-                setState(() {
-                  _partialIndex = _partialIndex - 1;  
-                  _progress_value -= 0.33;   
-                  _show_step_icon = (_partialIndex <= 1) ? true : false;
-                  _actual_step_icon = (_partialIndex < 1) ? "images/clipboard_image.png" : "images/lock_image.png"; 
-                });
-                pageController.jumpToPage(_partialIndex);
+                Controller.checkBackPage();
               }, 
               child: Text("Anterior",style: TextStyle(color: AppColors.primaryColor))) 
               : TextButton(
@@ -117,26 +106,27 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
               child: Text("Cancelar",style: TextStyle(color: AppColors.inputTextColor))
               ),
               
-            (_partialIndex < 2)
+            (Controller.partialIndex.value < 2)
             ? TextButton(
-              onPressed: (){
-                setState(() {
-                  _partialIndex = _partialIndex + 1;  
-                  _progress_value += 0.33; 
-                  _show_step_icon = (_partialIndex == 2) ? false : true;
-                  _actual_step_icon = (_partialIndex >= 1) ? "images/lock_image.png" : "images/clipboard_image.png";
-                });
-                pageController.jumpToPage(_partialIndex);
-                //print(_partialIndex.toString());
+              onPressed: (){                
+                Controller.checkNextPage();                
               }, 
               child: Text(
                       "Avançar",
                       style: TextStyle(
                         color: AppColors.primaryColor),
                       )
-              ) : const Text(""),
+              ) : TextButton(
+              onPressed: () => Controller.insertUser(),
+              child: Text(
+                      "Concluir",
+                      style: TextStyle(
+                        color: AppColors.primaryColor),
+                      )
+              )
           ]
-          ),
+          ),          
+          )
           )
     );
   }
