@@ -20,7 +20,7 @@ class _ErrorPopupState extends State<ErrorPopup> {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       contentPadding: const EdgeInsets.fromLTRB(10,20,10,10),
       content: Container(

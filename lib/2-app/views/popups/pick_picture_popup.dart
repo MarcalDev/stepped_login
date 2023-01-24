@@ -18,7 +18,7 @@ class _PickPicturePopupState extends State<PickPicturePopup> {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       contentPadding: const EdgeInsets.fromLTRB(10,20,10,10),
       content: Container(
@@ -30,12 +30,14 @@ class _PickPicturePopupState extends State<PickPicturePopup> {
         children: <Widget>[
           const Text("Anexar foto com", style: AppTextStyles.textPopupTitle),
           Padding(
-            padding: EdgeInsets.only(top:10),
+            padding: EdgeInsets.only(top:10, bottom: 10),
             child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton(       
+              Padding(
+                padding: EdgeInsets.only(right: 15),
+                child: ElevatedButton(       
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonBackgroundColor),
                   shadowColor: MaterialStateProperty.all<Color>(AppColors.buttonShadowColor),
@@ -50,7 +52,7 @@ class _PickPicturePopupState extends State<PickPicturePopup> {
                    Navigator.pop(context);
                 },
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 15, 20, 15),
+                  padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
                   child: Column(    
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,              
                     children: <Widget>[ 
@@ -70,6 +72,8 @@ class _PickPicturePopupState extends State<PickPicturePopup> {
                   )
                 )
                 ),
+              
+              ),
               ElevatedButton(                
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonBackgroundColor),

@@ -10,6 +10,8 @@ import 'package:stepped_login/2-app/views/user_register/widgets/basic_data_parti
 import 'package:stepped_login/2-app/views/user_register/widgets/password_partial.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/profile_pic_partial.dart';
 import 'package:uuid/uuid.dart';
+
+import '../views/popups/two_options_popup.dart';
 class RegisterController extends GetxController{
 
   late BuildContext context;
@@ -100,12 +102,12 @@ class RegisterController extends GetxController{
     }     
   }  
 
-  checkBackPage(){   
-    partialIndex.value = partialIndex.value - 1;
-    progressValue.value -= 0.33;   
-    showStepIcon.value = (partialIndex.value <= 1) ? true : false;
-    actualStepIcon.value = (partialIndex.value < 1) ? "images/clipboard_image.png" : "images/lock_image.png"; 
-    pageController.jumpToPage(partialIndex.value);
+  checkBackPage(){       
+      partialIndex.value = partialIndex.value - 1;
+      progressValue.value -= 0.33;   
+      showStepIcon.value = (partialIndex.value <= 1) ? true : false;
+      actualStepIcon.value = (partialIndex.value < 1) ? "images/clipboard_image.png" : "images/lock_image.png"; 
+      pageController.jumpToPage(partialIndex.value);
   }
 
   checkNextPage(){

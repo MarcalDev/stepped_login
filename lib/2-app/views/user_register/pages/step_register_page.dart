@@ -3,6 +3,8 @@ import 'package:stepped_login/2-app/controllers/register_controller.dart';
 import 'package:get/get.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
 
+import '../../popups/two_options_popup.dart';
+
 class StepRegisterPage extends StatefulWidget {
   const StepRegisterPage({Key? key}) : super(key: key);
 
@@ -102,7 +104,14 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
               }, 
               child: Text("Anterior",style: TextStyle(color: AppColors.primaryColor))) 
               : TextButton(
-              onPressed: ()=> Get.back(), 
+              onPressed: () async{
+                var resultTwoOptions = await showDialog(context: context, builder: (BuildContext context) {return TwoOptionsPopup();});
+                if(resultTwoOptions == true){
+                  Get.back();
+                }else{
+                  
+                }
+              }, 
               child: Text("Cancelar",style: TextStyle(color: AppColors.inputTextColor))
               ),
               
