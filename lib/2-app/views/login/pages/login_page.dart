@@ -78,7 +78,10 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.all(32),
         child: GestureDetector(
           onTap: () => Controller.PushToRegisterPage(),
-          child: Text("Não possui uma conta? Cadastre-se", textAlign: TextAlign.center, style: AppTextStyles.textDescription),
+          child: Container(
+            padding: EdgeInsets.all(8),
+            child: Text("Não possui uma conta? Cadastre-se", textAlign: TextAlign.center, style: AppTextStyles.textDescription),
+          )
         )
       )
     );

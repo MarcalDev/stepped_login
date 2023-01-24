@@ -27,6 +27,8 @@ class LoginController extends GetxController{
   }
 
   PushToRegisterPage(){
+    email_controller.clear();
+    password_controller.clear();
     Get.to(StepRegisterPage());  
   }
 

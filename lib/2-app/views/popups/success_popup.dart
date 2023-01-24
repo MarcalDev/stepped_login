@@ -36,16 +36,17 @@ class _SuccessPopupState extends State<SuccessPopup>
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      contentPadding: const EdgeInsets.fromLTRB(10,20,10,10),
+      contentPadding: const EdgeInsets.fromLTRB(10,30,10,10),
       content: Container(
       padding: EdgeInsets.only(left: 10, right: 10),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          Image.asset('images/check.png', height: 70),
           Padding(
-            padding: EdgeInsets.only(bottom: 20),
+            padding: EdgeInsets.only(bottom: 20, top: 15),
             child: Text(widget.popupText, style: AppTextStyles.textPopupTitle, textAlign: TextAlign.center,) 
             ),
           Container(

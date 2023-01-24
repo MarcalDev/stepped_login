@@ -73,6 +73,8 @@ flutter:
     - images/clipboard_image.png
     - images/lock_image.png
     - images/icon_user.jpeg
+    - images/remove.png
+    - images/check.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -18,15 +18,15 @@ class _TwoOptionsPopupState extends State<TwoOptionsPopup> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      contentPadding: const EdgeInsets.fromLTRB(10,20,10,10),
+      contentPadding: const EdgeInsets.fromLTRB(10,30,10,10),
       content: Container(
       padding: EdgeInsets.only(left: 10, right: 10),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          const Text("Tem certeza que deseja cancelar? ", style: AppTextStyles.textPopupTitle),
+          const Text("Deseja cancelar? ", style: AppTextStyles.textPopupTitle),
           Padding(
             padding: EdgeInsets.only(top:25, bottom: 10),
             child: Row(
