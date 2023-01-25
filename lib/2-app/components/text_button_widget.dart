@@ -22,7 +22,7 @@ class _TextButtonWidgetState extends State<TextButtonWidget> {
       child: Text(widget.text, style: AppTextStyles.buttonText),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(AppColors.thirdColor),
-        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.fromLTRB(15, 10, 15, 10)),
+        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.fromLTRB(15, 10, 15, 10)),
         textStyle: MaterialStateProperty.all<TextStyle>(AppTextStyles.buttonText), 
         elevation: MaterialStateProperty.all<double>(0),
         alignment: Alignment.center

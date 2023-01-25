@@ -22,7 +22,7 @@ class _PickPicturePopupState extends State<PickPicturePopup> {
       ),
       contentPadding: const EdgeInsets.fromLTRB(10,20,10,10),
       content: Container(
-      padding: EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -30,25 +30,25 @@ class _PickPicturePopupState extends State<PickPicturePopup> {
         children: <Widget>[
           const Text("Anexar foto com", style: AppTextStyles.textPopupTitle),
           Padding(
-            padding: EdgeInsets.only(top:10, bottom: 10),
+            padding: const EdgeInsets.only(top:10, bottom: 10),
             child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
-                padding: EdgeInsets.only(right: 15),
+                padding: const EdgeInsets.only(right: 15),
                 child: ElevatedButton(       
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonBackgroundColor),
                   shadowColor: MaterialStateProperty.all<Color>(AppColors.buttonShadowColor),
                   elevation: MaterialStateProperty.all<double?>(0),
                   shape: MaterialStateProperty.all<OutlinedBorder>(
-                    RoundedRectangleBorder(
+                    const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),)
                 ),
                 onPressed: (){
-                   Controller.TakePicture(false);
+                   Controller.takePicture(false);
                    Navigator.pop(context);
                 },
                 child: Padding(
@@ -62,7 +62,7 @@ class _PickPicturePopupState extends State<PickPicturePopup> {
                           color: AppColors.thirdColor
                         ),
                         padding: const EdgeInsets.all(8),
-                        child: Icon(Icons.photo_library_rounded, size: 45, color: Colors.white),
+                        child: const Icon(Icons.photo_library_rounded, size: 45, color: Colors.white),
                        ),   
                       const Padding(
                         padding: EdgeInsets.only(top: 8),
@@ -105,7 +105,7 @@ class _PickPicturePopupState extends State<PickPicturePopup> {
                   )
                 ),
                 onPressed: () {
-                  Controller.TakePicture(true);
+                  Controller.takePicture(true);
                   Navigator.pop(context);
                 } ,                                
                 ),

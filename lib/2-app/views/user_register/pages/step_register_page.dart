@@ -13,15 +13,9 @@ class StepRegisterPage extends StatefulWidget {
 }
 
 class _StepRegisterPageState extends State<StepRegisterPage> {
-
-  double _progress_value = 0.0;
-  late int _partialIndex = 0;
-  bool _show_step_icon = true;
-  String _actual_step_icon = "images/clipboard_image.png";  
-
   @override
   Widget build(BuildContext context) {
-    RegisterController Controller = Get.put(RegisterController(context: context));
+    final RegisterController Controller = Get.put(RegisterController(context: context));
     return Scaffold(
       extendBodyBehindAppBar: false,
       backgroundColor: Colors.white,
@@ -69,14 +63,14 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
                 ): Container(),                
                 ),
                 Padding(
-                  padding: (Controller.partialIndex.value == 2) ? EdgeInsets.only(top: 70) : EdgeInsets.all(0),
+                  padding: (Controller.partialIndex.value == 2) ? const EdgeInsets.only(top: 70) : const EdgeInsets.all(0),
                   child: Container(
                   height: 300,                  
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                   child: PageView(                  
                   scrollDirection: Axis.horizontal,
                   pageSnapping: false,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   controller: Controller.pageController,
                   children: <Widget>[
                     Controller.firstPage,
@@ -105,7 +99,7 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
               child: Text("Anterior",style: TextStyle(color: AppColors.primaryColor))) 
               : TextButton(
               onPressed: () async{
-                var resultTwoOptions = await showDialog(context: context, builder: (BuildContext context) {return TwoOptionsPopup();});
+                var resultTwoOptions = await showDialog(context: context, builder: (BuildContext context) {return const TwoOptionsPopup();});
                 if(resultTwoOptions == true){
                   Get.back();
                 }else{

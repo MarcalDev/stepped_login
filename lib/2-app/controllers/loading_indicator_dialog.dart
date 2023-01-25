@@ -25,9 +25,9 @@ class LoadingIndicatorDialog{
         isDisplayed = true;
         return WillPopScope(
           child: SimpleDialog(
-            titlePadding: EdgeInsets.all(0),
-            insetPadding: EdgeInsets.all(0),
-            contentPadding: EdgeInsets.all(0),   
+            titlePadding: const EdgeInsets.all(0),
+            insetPadding: const EdgeInsets.all(0),
+            contentPadding: const EdgeInsets.all(0),   
             backgroundColor: Colors.transparent,
             elevation: 0,    
             children: [
@@ -37,7 +37,7 @@ class LoadingIndicatorDialog{
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),                               
-                  padding: EdgeInsets.all(25),
+                  padding: const EdgeInsets.all(25),
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   )

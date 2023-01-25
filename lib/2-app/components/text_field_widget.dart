@@ -4,8 +4,8 @@ import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
 
 class TextFieldWidget extends StatefulWidget {
     TextFieldWidget({
-    required this.hint_text,
-    required this.editing_controller,
+    required this.hintText,
+    required this.editingController,
     this.isPassword = false,
     this.isPhoneNumber = false,
     this.isPhoneArea = false,
@@ -13,8 +13,8 @@ class TextFieldWidget extends StatefulWidget {
     this.isLastField = false,
     super.key
     });
-    String hint_text = "";
-    TextEditingController editing_controller;
+    String hintText = "";
+    TextEditingController editingController;
     bool isPassword;
     bool isPhoneNumber;
     bool isPhoneArea;
@@ -39,15 +39,15 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     type: MaskAutoCompletionType.lazy,    
   );
 
-  bool _show_password = true;
+  bool _showPassword = true;
   @override
   Widget build(BuildContext context) {
     return TextField(      
       decoration: InputDecoration(        
-        hintText: (!widget.isPhoneArea && !widget.isPhoneNumber) ? widget.hint_text : ((widget.isPhoneArea)? "(00)" : "9999-999"),
+        hintText: (!widget.isPhoneArea && !widget.isPhoneNumber) ? widget.hintText : ((widget.isPhoneArea)? "(00)" : "9999-999"),
         hintStyle: TextStyle(color: AppColors.inputHintColor),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10)), borderSide: BorderSide(color: Colors.transparent)),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10)), borderSide: BorderSide(color: Colors.transparent)),
+        enabledBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10)), borderSide: BorderSide(color: Colors.transparent)),
+        focusedBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10)), borderSide: BorderSide(color: Colors.transparent)),
         fillColor: AppColors.inputBackgroundColor,
         isDense: false,
         filled:true,
@@ -58,11 +58,11 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                     ? IconButton(
                       onPressed: (){
                         setState(() {
-                          _show_password = !_show_password;
+                          _showPassword = !_showPassword;
                         });
                       }, 
                       icon: Icon(
-                        _show_password
+                        _showPassword
                         ? Icons.visibility_off
                         : Icons.visibility,
                         color: AppColors.thirdColor,
@@ -70,8 +70,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                       ): null,
       ),
       keyboardType: (widget.isPassword) ? TextInputType.visiblePassword : (widget.isPhoneNumber || widget.isPhoneArea) ? TextInputType.phone : (widget.isEmail) ? TextInputType.emailAddress : TextInputType.text,  
-      obscureText: (widget.isPassword) ?  _show_password : false,   
-      controller: widget.editing_controller,
+      obscureText: (widget.isPassword) ?  _showPassword : false,   
+      controller: widget.editingController,
       inputFormatters: (widget.isPhoneNumber)? [phoneFormatter] : ((widget.isPhoneArea) ? [phoneAreaFormatter] : []),
       cursorColor: AppColors.thirdColor,
       textAlign: (widget.isPhoneArea) ? TextAlign.center : TextAlign.left,

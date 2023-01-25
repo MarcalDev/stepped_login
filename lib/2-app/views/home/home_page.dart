@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    LoginController Controller = Get.put(LoginController(context:  context));   
+    final LoginController Controller = Get.put(LoginController(context:  context));   
     return Scaffold(
       body: Center(
         child: Column(

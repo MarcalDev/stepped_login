@@ -1,28 +1,24 @@
-import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stepped_login/1-base/models/user.dart';
 import 'package:stepped_login/1-base/services/user_service.dart';
 import 'package:stepped_login/2-app/controllers/loading_indicator_dialog.dart';
-import 'package:stepped_login/2-app/views/login/pages/login_page.dart';
 import 'package:stepped_login/2-app/views/popups/error_popup.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/basic_data_partial.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/password_partial.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/profile_pic_partial.dart';
 import 'package:uuid/uuid.dart';
-
 import '../views/popups/success_popup.dart';
-import '../views/popups/two_options_popup.dart';
 class RegisterController extends GetxController{
 
   late BuildContext context;
-  late TextEditingController email_controller;
-  late TextEditingController name_controller;
-  late TextEditingController phone_area_controller;
-  late TextEditingController phone_number_controller;
-  late TextEditingController password_controller;
-  late TextEditingController second_password_controller;
+  late TextEditingController emailController;
+  late TextEditingController nameController;
+  late TextEditingController phoneAreaController;
+  late TextEditingController phoneNumberController;
+  late TextEditingController passwordController;
+  late TextEditingController secondPasswordController;
   late RxString profilePicturePath;
   late RxBool showPicture;
   late BasicDataPartial firstPage;
@@ -41,17 +37,17 @@ class RegisterController extends GetxController{
   }
 
   _initializeVariables(){
-    email_controller = TextEditingController();
-    name_controller = TextEditingController();
-    phone_area_controller = TextEditingController();
-    phone_number_controller = TextEditingController();
-    password_controller = TextEditingController();
-    second_password_controller = TextEditingController();
+    emailController = TextEditingController();
+    nameController = TextEditingController();
+    phoneAreaController = TextEditingController();
+    phoneNumberController = TextEditingController();
+    passwordController = TextEditingController();
+    secondPasswordController = TextEditingController();
     profilePicturePath = "".obs;
     showPicture = false.obs;
-    firstPage = BasicDataPartial();
-    secondPage = PasswordPartial();
-    thirdPage = ProfilePicPartial();
+    firstPage = const BasicDataPartial();
+    secondPage = const PasswordPartial();
+    thirdPage = const ProfilePicPartial();
     userService = UserService();
     partialIndex = 0.obs;
     progressValue = 0.0.obs;
@@ -60,9 +56,9 @@ class RegisterController extends GetxController{
     pageController = PageController();
   }
 
-  Future TakePicture(bool OpenCamera) async{
+  Future takePicture(bool openCamera) async{
     PickedFile? selectedFile; 
-    if(OpenCamera){
+    if(openCamera){
       selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.camera);
     }else{
       selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
@@ -78,11 +74,11 @@ class RegisterController extends GetxController{
     const uui = Uuid();
     User user = User(
       id: uui.v1(),
-      email: email_controller.text,
-      name: name_controller.text,
+      email: emailController.text,
+      name: nameController.text,
       isActive: true,
-      password: password_controller.text,
-      phoneNumber: phone_area_controller.text + phone_number_controller.text,
+      password: passwordController.text,
+      phoneNumber: phoneAreaController.text + phoneNumberController.text,
       realeseDate: null
     );
     
@@ -99,7 +95,7 @@ class RegisterController extends GetxController{
   }
 
   insertUser() async{
-    if(email_controller.text.isNotEmpty && name_controller.text.isNotEmpty && password_controller.text.isNotEmpty && second_password_controller.text.isNotEmpty){
+    if(emailController.text.isNotEmpty && nameController.text.isNotEmpty && passwordController.text.isNotEmpty && secondPasswordController.text.isNotEmpty){
       postUser();       
     }
     else{
@@ -116,18 +112,18 @@ class RegisterController extends GetxController{
   }
 
   checkNextPage(){
-    if(partialIndex == 0){
-      if(email_controller.text.isNotEmpty && name_controller.text.isNotEmpty){
+    if(partialIndex.value == 0){
+      if(emailController.text.isNotEmpty && nameController.text.isNotEmpty){
         nextPage();
       }else{
         showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Verifique os campos não preenchidos",);});
       }
     }else{
-      if(password_controller.text.isNotEmpty && second_password_controller.text.isNotEmpty){
-        if(password_controller.text != second_password_controller.text){
+      if(passwordController.text.isNotEmpty && secondPasswordController.text.isNotEmpty){
+        if(passwordController.text != secondPasswordController.text){
           showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "As senhas informadas devem ser iguais",);});
         }else{
-          if(password_controller.text.length < 6){
+          if(passwordController.text.length < 6){
             showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "A senha deve conter ao menos 6 caracteres",);});
           }else{
             nextPage();

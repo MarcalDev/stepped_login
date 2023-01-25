@@ -23,7 +23,7 @@ class _ErrorPopupState extends State<ErrorPopup> {
       ),
       contentPadding: const EdgeInsets.fromLTRB(10,30,10,10),
       content: Container(
-      padding: EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -31,11 +31,11 @@ class _ErrorPopupState extends State<ErrorPopup> {
         children: <Widget>[
           Image.asset('images/remove.png', height: 70),
           Padding(
-            padding: EdgeInsets.only(bottom: 20, top: 15),
+            padding: const EdgeInsets.only(bottom: 20, top: 15),
             child: Text(widget.popupText, style: AppTextStyles.textPopupTitle, textAlign: TextAlign.center,) 
             ),
           Container(
-            padding: EdgeInsets.all(0),
+            padding: const EdgeInsets.all(0),
             width: double.infinity,
             child: TextButton(onPressed: (){Navigator.pop(context);}, child: Text("OK", style: AppTextStyles.buttonText),style: AppButtonStyles.primaryButtonStyle,)
           )          

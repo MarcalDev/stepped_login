@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:uuid/uuid.dart';
 
 abstract class BaseModel{
   late String? id;

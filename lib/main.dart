@@ -9,7 +9,7 @@ void main() {
 
   runApp(
     GetMaterialApp(
-        home: LoginPage(),
+        home: const LoginPage(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           secondaryHeaderColor: const Color(0xff62C185), 

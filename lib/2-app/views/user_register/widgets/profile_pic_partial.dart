@@ -14,12 +14,12 @@ class ProfilePicPartial extends StatefulWidget {
 }
 
 class _ProfilePicPartialState extends State<ProfilePicPartial> {
-  RegisterController _register_controller = Get.find();
+  final RegisterController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
      return Padding(
-      padding: EdgeInsets.all(0),
+      padding: const EdgeInsets.all(0),
       child: Center(
         child: Column(          
           mainAxisSize: MainAxisSize.max,
@@ -27,14 +27,14 @@ class _ProfilePicPartialState extends State<ProfilePicPartial> {
           children: [
              const Text("Selecione sua foto de perfil"),
             Padding(
-              padding: EdgeInsets.fromLTRB(0,45,0,0),
+              padding: const EdgeInsets.fromLTRB(0,45,0,0),
               child: Obx(
                 () => GestureDetector(
-                onTap: (){showDialog(context: context, builder: (BuildContext context) {return PickPicturePopup();});
+                onTap: (){showDialog(context: context, builder: (BuildContext context) {return const PickPicturePopup();});
                 },
-                child: (_register_controller.showPicture.value)
+                child: (_controller.showPicture.value)
               ?  CircleAvatar(
-                      backgroundImage:  FileImage(File(_register_controller.profilePicturePath.value)),
+                      backgroundImage:  FileImage(File(_controller.profilePicturePath.value)),
                       radius: 100,
                       )
                 :

@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,8 +11,8 @@ class UserService extends ServiceBase{
   Future getUsers() async {
     http.Response response = await http.get(Uri.parse("$baseUrl/api/User/Get"));
     if(response.statusCode==200){
-      print("Usuarios : " + response.body);
-      return UsersFromJson(response.body);
+      //("Usuarios : " + response.body);
+      return usersFromJson(response.body);
     }else{
       return null;
     }
@@ -23,8 +21,8 @@ class UserService extends ServiceBase{
    Future<User?> userAuthentication(String email, String password) async {
     http.Response response = await http.get(Uri.parse("$baseUrl/api/User/UserAuthentication?email=$email&password=$password"));
     if(response.statusCode==200){
-      print("Usuario : " + response.body);
-      var user = UserFromJson(response.body);
+      //print("Usuario : " + response.body);
+      var user = userFromJson(response.body);
       return user;
     }else{
       return null;
@@ -34,8 +32,8 @@ class UserService extends ServiceBase{
   Future getUserById(UniqueKey id) async {
     http.Response response = await http.get(Uri.parse("$baseUrl/api/User/GetUserById?id=$id"));
     if(response.statusCode==200){
-      print("Usuario : " + response.body);
-      return UserFromJson(response.body);
+      //print("Usuario : " + response.body);
+      return userFromJson(response.body);
     }else{
       return null;
     }
@@ -48,7 +46,7 @@ class UserService extends ServiceBase{
           "$baseUrl/api/User/Post"      
         ),
         headers: {"content-type" : "application/json"},
-        body: UsersToJson(user),
+        body: usersToJson(user),
       );
 
       if(response.statusCode == 200){
@@ -58,7 +56,7 @@ class UserService extends ServiceBase{
       }  
 
     }catch(ex){
-      print("excessao: " + ex.toString());
+      //print("excessao: " + ex.toString());
       return false;
     }    
 

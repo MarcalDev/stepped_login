@@ -11,7 +11,7 @@ class PasswordPartial extends StatefulWidget {
 }
 
 class _PasswordPartialState extends State<PasswordPartial> {
-  RegisterController _register_controller = Get.find();
+  final RegisterController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +21,9 @@ class _PasswordPartialState extends State<PasswordPartial> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-              child: TextFieldWidget(editing_controller: _register_controller.password_controller, hint_text: "Digite sua senha*",isPassword: true),              
+              child: TextFieldWidget(editingController: _controller.passwordController, hintText: "Digite sua senha*",isPassword: true),              
             ),      
-            TextFieldWidget(editing_controller: _register_controller.second_password_controller, hint_text: "Repita a senha*",isPassword: true, isLastField: true),                  
+            TextFieldWidget(editingController: _controller.secondPasswordController, hintText: "Repita a senha*",isPassword: true, isLastField: true),                  
           ],
         )
       ),

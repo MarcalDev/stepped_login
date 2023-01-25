@@ -12,7 +12,7 @@ class BasicDataPartial extends StatefulWidget {
 
 class _BasicDataPartialState extends State<BasicDataPartial> {
   
-  RegisterController _register_controller = Get.find();
+  final RegisterController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,10 @@ class _BasicDataPartialState extends State<BasicDataPartial> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            TextFieldWidget(editing_controller: _register_controller.name_controller, hint_text: "Digite seu nome*"),
+            TextFieldWidget(editingController: _controller.nameController, hintText: "Digite seu nome*"),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-              child: TextFieldWidget(editing_controller: _register_controller.email_controller, hint_text: "Digite seu e-mail*", isEmail: true)
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+              child: TextFieldWidget(editingController: _controller.emailController, hintText: "Digite seu e-mail*", isEmail: true)
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,12 +33,12 @@ class _BasicDataPartialState extends State<BasicDataPartial> {
                 Container(
                     width: 70,
                     padding: const EdgeInsets.all(0),
-                    child: TextFieldWidget(editing_controller: _register_controller.phone_area_controller, hint_text: "DDD ",isPhoneArea: true)  
+                    child: TextFieldWidget(editingController: _controller.phoneAreaController, hintText: "DDD ",isPhoneArea: true)  
                   ),
                 Container(
                     width: 265,
                     padding: const EdgeInsets.all(0),
-                    child: TextFieldWidget(editing_controller: _register_controller.phone_number_controller, hint_text: "Celular",isPhoneNumber: true, isLastField: true),
+                    child: TextFieldWidget(editingController: _controller.phoneNumberController, hintText: "Celular",isPhoneNumber: true, isLastField: true),
                 )
             ],
             )
