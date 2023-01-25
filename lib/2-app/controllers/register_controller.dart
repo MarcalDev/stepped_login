@@ -79,7 +79,7 @@ class RegisterController extends GetxController{
       isActive: true,
       password: passwordController.text,
       phoneNumber: phoneAreaController.text + phoneNumberController.text,
-      realeseDate: null
+      realeaseDate: null
     );
     
     LoadingIndicatorDialog().show(context);

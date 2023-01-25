@@ -7,13 +7,13 @@ class User extends BaseModel{
   late String? phoneNumber;
   late String? password;
   User({
-    super.id,
-    super.isActive,
-    super.realeseDate,
+    super.id,    
     this.name,
     this.email,
     this.phoneNumber,
-    this.password
+    this.password,
+    super.realeaseDate,
+    super.isActive
   });
 
   factory User.fromJson(Map<String, dynamic> map){
@@ -23,8 +23,8 @@ class User extends BaseModel{
       email: map["email"], 
       phoneNumber: map["phoneNumber"], 
       password: map["password"], 
-      realeseDate: map["realeaseDate"], 
-      isActive: map["isActive"]);
+      realeaseDate: map["realeaseDate"], 
+      isActive: (map["isActive"] == 0)? false : true);
   }
 
   Map<String,dynamic> toJson(){
@@ -34,7 +34,7 @@ class User extends BaseModel{
       "Email" : email,
       "PhoneNumber" : phoneNumber,
       "Password" : password,
-      "RealeaseDate" : realeseDate,
+      "RealeaseDate" : realeaseDate,
       "isActive" : isActive
     };
   }

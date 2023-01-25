@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.fromLTRB(5, 15, 0, 5),
                     child: Text('Senha',style: AppTextStyles.textFieldTitle)
                   ),
-                  TextFieldWidget(hintText: 'Digite sua senha', editingController: controller.emailController, isLastField: true, isPassword: true),                
+                  TextFieldWidget(hintText: 'Digite sua senha', editingController: controller.passwordController, isLastField: true, isPassword: true),                
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
