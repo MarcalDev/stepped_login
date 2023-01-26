@@ -17,8 +17,40 @@ class UserRepository extends BaseRepository{
       }
     }catch(ex){
       print("ERRORINSERT :" + ex.toString());
+      return false;
+    }    
+  }
+
+  replaceUser(User user) async{
+    try{
+      Database db = await getDataBase();    
+      int? id = await db.update("User", user.toJson());
+
+      if(id != null){
+        return true;
+      }else{
+        return false;
+      }
+    }catch(ex){
+      print("ERRORINSERT :" + ex.toString());
+      return false;
+    }    
+  }
+
+
+  insertOrReplaceUser(User user)async{
+    try{
+      var savedUser = await getUser();
+      bool result = false;
+      if(savedUser != null){
+        result = await replaceUser(user);
+      }else{
+        result = await insertUser(user);
+      }
+      return result;
+    }catch(ex){
+      return false;
     }
-    
   }
 
   getUser() async{
@@ -29,6 +61,7 @@ class UserRepository extends BaseRepository{
       return User.fromJson(userMap.first); 
     }catch(ex){
       print("ERRORGET :" + ex.toString());
+      return null;
     }
        
   }

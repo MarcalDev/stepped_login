@@ -19,14 +19,18 @@ class UserService extends ServiceBase{
   }
 
    Future<User?> userAuthentication(String email, String password) async {
-    http.Response response = await http.get(Uri.parse("$baseUrl/api/User/UserAuthentication?email=$email&password=$password"));
-    if(response.statusCode==200){
-      //print("Usuario : " + response.body);
-      var user = userFromJson(response.body);
-      return user;
-    }else{
+    try{
+      http.Response response = await http.get(Uri.parse("$baseUrl/api/User/UserAuthentication?email=$email&password=$password"));
+      if(response.statusCode==200){
+        //print("Usuario : " + response.body);
+        var user = userFromJson(response.body);
+        return user;
+      }else{
+        return null;
+      }
+    } catch(ex){
       return null;
-    }     
+    }    
   }
 
   Future getUserById(UniqueKey id) async {

@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -83,15 +84,22 @@ class RegisterController extends GetxController{
     );
     
     LoadingIndicatorDialog().show(context);
-    var result = await userService.postUser(user);
-    LoadingIndicatorDialog().dismiss();
-    if(result){
-      showDialog(context: context, builder: (BuildContext context) {return SuccessPopup(popupText: "Usuário cadastrado com sucesso!",);})
-      .then((_) => Navigator.of(context).popUntil((route) => route.isFirst));
-       
+    var connection = await Connectivity().checkConnectivity();
+
+    if(connection == ConnectivityResult.none){
+      await showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Verifique sua conexão à internet");});  
+      LoadingIndicatorDialog().dismiss();    
     }else{
-       showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Não foi possível cadastrar o usuário",);});
-    }   
+      var result = await userService.postUser(user);
+      LoadingIndicatorDialog().dismiss();
+      if(result){
+        showDialog(context: context, builder: (BuildContext context) {return SuccessPopup(popupText: "Usuário cadastrado com sucesso!",);})
+        .then((_) => Navigator.of(context).popUntil((route) => route.isFirst));
+        
+      }else{
+        showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Não foi possível cadastrar o usuário",);});
+      }   
+    }    
   }
 
   insertUser() async{
