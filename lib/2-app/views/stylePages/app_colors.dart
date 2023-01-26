@@ -12,5 +12,6 @@ class AppColors{
   static Color inputHintColor = const Color(0xffB2B2B2);
   static Color inputBackgroundColor = const Color(0xffEAEAEA);
   static Color inputTextColor = const Color(0xff3C4048);
+  static Color errorColor = Colors.red;
 
 }

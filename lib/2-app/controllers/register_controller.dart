@@ -2,6 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:stepped_login/1-base/models/user.dart';
 import 'package:stepped_login/1-base/services/user_service.dart';
 import 'package:stepped_login/2-app/controllers/loading_indicator_dialog.dart';
@@ -31,6 +32,11 @@ class RegisterController extends GetxController{
   late RxBool showStepIcon;
   late RxString actualStepIcon;
   late PageController pageController;
+  late RxBool showNameError;
+  late RxBool showEmailError;
+  late RxBool showPasswordError;
+  late RxBool showSecondPasswordError;
+  late RxList<String> requirementsList;
 
 
   RegisterController({required this.context}){
@@ -55,20 +61,41 @@ class RegisterController extends GetxController{
     showStepIcon = true.obs;
     actualStepIcon = "images/clipboard_image.png".obs;
     pageController = PageController();
+    showNameError = false.obs;
+    showEmailError = false.obs;
+    showPasswordError = false.obs;
+    showSecondPasswordError = false.obs;
+    requirementsList = List<String>.empty().obs;
   }
 
   Future takePicture(bool openCamera) async{
     PickedFile? selectedFile; 
     if(openCamera){
-      selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.camera);
+      var cameraPermission = await Permission.camera.request();
+      if(cameraPermission.isGranted){
+        selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.camera);
+      }else{
+        await showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Autorize o uso da câmera para tirar fotos");}); 
+      }
     }else{
-      selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+      var galleryPermission = await Permission.storage.request();
+      if(galleryPermission.isGranted){
+        selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+      }else{
+        await showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Autorize o uso da galeria para importar fotos");}); 
+      }      
     }
       //setProfilePicture(File(selectedFile!.path));
       profilePicturePath.value = selectedFile!.path;
       showPicture.value = true;
       //setShowPicture(true);
       update();
+  }
+
+  getPermissionStatus() async{
+    await Permission.camera.request();
+
+    return await Permission.camera.status;    
   }
 
   postUser() async{
@@ -121,24 +148,29 @@ class RegisterController extends GetxController{
 
   checkNextPage(){
     if(partialIndex.value == 0){
+      showNameError.value = nameController.text.isEmpty;
+      showEmailError.value = emailController.text.isEmpty;
+
       if(emailController.text.isNotEmpty && nameController.text.isNotEmpty){
         nextPage();
-      }else{
-        showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Verifique os campos não preenchidos",);});
       }
     }else{
+      showPasswordError.value = passwordController.text.isEmpty;
+      showSecondPasswordError.value = secondPasswordController.text.isEmpty;
       if(passwordController.text.isNotEmpty && secondPasswordController.text.isNotEmpty){
+        requirementsList.clear();
         if(passwordController.text != secondPasswordController.text){
-          showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "As senhas informadas devem ser iguais",);});
+          requirementsList.add('As senhas informadas devem ser iguais');
+          //showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "As senhas informadas devem ser iguais",);});
         }else{
           if(passwordController.text.length < 6){
-            showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "A senha deve conter ao menos 6 caracteres",);});
+            requirementsList.add('A senha deve conter ao menos 6 caracteres');
+            //showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "A senha deve conter ao menos 6 caracteres",);});
           }else{
+            requirementsList.clear();
             nextPage();
           }
         }
-      }else{
-        showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Verifique os campos não preenchidos",);});
       }
     }
   }

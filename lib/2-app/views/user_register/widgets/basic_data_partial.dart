@@ -18,14 +18,15 @@ class _BasicDataPartialState extends State<BasicDataPartial> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(0),
-      child: Column(
+      child: Obx(() => 
+        Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            TextFieldWidget(editingController: _controller.nameController, hintText: "Digite seu nome*"),
+            TextFieldWidget(editingController: _controller.nameController, hintText: "Digite seu nome*", showErrorInput: _controller.showNameError.value),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
-              child: TextFieldWidget(editingController: _controller.emailController, hintText: "Digite seu e-mail*", isEmail: true)
+              child: TextFieldWidget(editingController: _controller.emailController, hintText: "Digite seu e-mail*", isEmail: true, showErrorInput: _controller.showEmailError.value,)
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,7 +44,8 @@ class _BasicDataPartialState extends State<BasicDataPartial> {
             ],
             )
           ],
-          )
-    );
+          )    
+      )
+      );
   }
 }

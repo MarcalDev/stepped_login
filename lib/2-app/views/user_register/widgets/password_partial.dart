@@ -17,16 +17,19 @@ class _PasswordPartialState extends State<PasswordPartial> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Column(
+        child: Obx(() => 
+          Column(
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-              child: TextFieldWidget(editingController: _controller.passwordController, hintText: "Digite sua senha*",isPassword: true),              
+              child: TextFieldWidget(editingController: _controller.passwordController, hintText: "Digite sua senha*",isPassword: true, showErrorInput: _controller.showPasswordError.value),              
             ),      
-            TextFieldWidget(editingController: _controller.secondPasswordController, hintText: "Repita a senha*",isPassword: true, isLastField: true),                  
+            TextFieldWidget(editingController: _controller.secondPasswordController, hintText: "Repita a senha*",isPassword: true, isLastField: true, showErrorInput: _controller.showSecondPasswordError.value, fieldRequirements: _controller.requirementsList.value),                  
           ],
         )
-      ),
+      
+        ) 
+        ),
     );
   }
 }

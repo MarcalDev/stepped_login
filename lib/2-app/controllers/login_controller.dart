@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,20 +32,26 @@ class LoginController extends GetxController{
     getSavedUser();
   }
 
+  // @override
+  // void initState(){
+  //   SystemChrome.setEnabledSystemUIMode([]);
+  //   super.initState();
+  // }
+
   pushToRegisterPage(){
     emailController.clear();
     passwordController.clear();
     Get.to(const StepRegisterPage());  
   }
 
-  _providerInternet<Widget>(){
-    return StreamProvider<InternetConnectionStatus>(
-    initialData: InternetConnectionStatus.connected,
-    create: (_){
-      return InternetConnectionChecker().onStatusChange;
-    },
-  );
-  }
+  // _providerInternet<Widget>(){
+  //   return StreamProvider<InternetConnectionStatus>(
+  //   initialData: InternetConnectionStatus.connected,
+  //   create: (_){
+  //     return InternetConnectionChecker().onStatusChange;
+  //   },
+  // );
+  // }
 
 
   loginUser() async{
