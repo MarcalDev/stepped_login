@@ -22,9 +22,9 @@ class _PasswordPartialState extends State<PasswordPartial> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-              child: TextFieldWidget(editingController: _controller.passwordController, hintText: "Digite sua senha*",isPassword: true, showErrorInput: _controller.showPasswordError.value),              
+              child: TextFieldWidget(editingController: _controller.passwordController, labelText: "Digite sua senha*",isPassword: true, showErrorInput: _controller.showPasswordError.value, fieldRequirements: _controller.passwordRequirementsList.value),              
             ),      
-            TextFieldWidget(editingController: _controller.secondPasswordController, hintText: "Repita a senha*",isPassword: true, isLastField: true, showErrorInput: _controller.showSecondPasswordError.value, fieldRequirements: _controller.requirementsList.value),                  
+            TextFieldWidget(editingController: _controller.secondPasswordController, labelText: "Repita a senha*",isPassword: true, isLastField: true, showErrorInput: _controller.showSecondPasswordError.value, fieldRequirements: _controller.secondPasswordRequirementsList.value),                  
           ],
         )
       

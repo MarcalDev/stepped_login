@@ -36,7 +36,10 @@ class RegisterController extends GetxController{
   late RxBool showEmailError;
   late RxBool showPasswordError;
   late RxBool showSecondPasswordError;
-  late RxList<String> requirementsList;
+  late RxList<String> passwordRequirementsList;
+  late RxList<String> secondPasswordRequirementsList;
+  late RxList<String> nameRequirementsList;
+  late RxList<String> emailRequirementsList;
 
 
   RegisterController({required this.context}){
@@ -65,7 +68,10 @@ class RegisterController extends GetxController{
     showEmailError = false.obs;
     showPasswordError = false.obs;
     showSecondPasswordError = false.obs;
-    requirementsList = List<String>.empty().obs;
+    passwordRequirementsList = List<String>.empty().obs;
+    secondPasswordRequirementsList = List<String>.empty().obs;
+    nameRequirementsList = List<String>.empty().obs;
+    emailRequirementsList = List<String>.empty().obs;
   }
 
   Future takePicture(bool openCamera) async{
@@ -148,30 +154,85 @@ class RegisterController extends GetxController{
 
   checkNextPage(){
     if(partialIndex.value == 0){
-      showNameError.value = nameController.text.isEmpty;
-      showEmailError.value = emailController.text.isEmpty;
-
-      if(emailController.text.isNotEmpty && nameController.text.isNotEmpty){
-        nextPage();
-      }
+      nameRequirementsList.clear();
+      emailRequirementsList.clear();
+      if(!validateEmptyText(nameController.text, false) || !validateEmptyText(emailController.text, true)){
+        if(!validateEmptyText(nameController.text, false)){
+          if(nameController.text.isNotEmpty){
+            nameRequirementsList.add('Insira um nome válido');
+          }          
+          showNameError.value = true;          
+        }
+        if(!validateEmptyText(emailController.text, true)){
+          if(emailController.text.isNotEmpty){
+            emailRequirementsList.add('Insira um e-mail válido');
+          }          
+          showEmailError.value = true;   
+        }
+      }else{
+          showNameError.value = false;
+          showEmailError.value = false;
+          nextPage();
+        } 
     }else{
       showPasswordError.value = passwordController.text.isEmpty;
       showSecondPasswordError.value = secondPasswordController.text.isEmpty;
-      if(passwordController.text.isNotEmpty && secondPasswordController.text.isNotEmpty){
-        requirementsList.clear();
-        if(passwordController.text != secondPasswordController.text){
-          requirementsList.add('As senhas informadas devem ser iguais');
-          //showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "As senhas informadas devem ser iguais",);});
-        }else{
-          if(passwordController.text.length < 6){
-            requirementsList.add('A senha deve conter ao menos 6 caracteres');
-            //showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "A senha deve conter ao menos 6 caracteres",);});
+      passwordRequirementsList.clear(); 
+      secondPasswordRequirementsList.clear();
+      if(passwordController.text.isNotEmpty && secondPasswordController.text.isNotEmpty){         
+        if(validatePassword()){
+          if(passwordController.text != secondPasswordController.text){
+            secondPasswordRequirementsList.add('As senhas informadas devem ser iguais');
+            showSecondPasswordError.value = true;
+            secondPasswordController.text = "";
           }else{
-            requirementsList.clear();
-            nextPage();
+              passwordRequirementsList.clear();
+              nextPage();
           }
-        }
+        }   
       }
+    }
+  }
+
+  bool validatePassword(){
+    var validPassword = true;
+    showPasswordError.value = false;
+    showSecondPasswordError.value = false;
+    var specialCaracters = ['@', '.', '-', '_','#'];
+    if(passwordController.text.length < 8){
+      passwordRequirementsList.add('A senha deve conter ao menos 8 caracteres');
+      showPasswordError.value = true;
+      validPassword = false;
+    }
+    if(!passwordController.text.contains(RegExp(r'[A-Z]'))){
+      passwordRequirementsList.add('A senha deve conter ao menos 1 letra maiuscula');
+      showPasswordError.value = true;
+      validPassword = false;
+    }
+    if(!passwordController.text.contains(RegExp(r'[0-9]'))){
+      passwordRequirementsList.add('A senha deve conter ao menos 1 número');
+      showPasswordError.value = true;
+      validPassword = false;
+    }
+    if(!passwordController.text.contains(RegExp(specialCaracters.toString()))){
+      passwordRequirementsList.add('A senha deve conter ao menos 1 caracter especial');
+      showPasswordError.value = true;
+      validPassword = false;
+    }
+    return validPassword;
+  }
+
+  bool validateEmptyText(String text, bool isPassword){
+    var actualText = text.trim();
+    if(isPassword){
+      if(!actualText.contains('@') || !actualText.contains('.')){
+        return false;
+      }
+    }
+    if (actualText.isNotEmpty){
+      return true;
+    }else{
+      return false;
     }
   }
 

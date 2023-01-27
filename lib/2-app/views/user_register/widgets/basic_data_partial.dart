@@ -23,10 +23,10 @@ class _BasicDataPartialState extends State<BasicDataPartial> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            TextFieldWidget(editingController: _controller.nameController, hintText: "Digite seu nome*", showErrorInput: _controller.showNameError.value),
+            TextFieldWidget(editingController: _controller.nameController, labelText: "Nome*", hintText: "Digite seu nome",showErrorInput: _controller.showNameError.value, fieldRequirements: _controller.nameRequirementsList.value),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
-              child: TextFieldWidget(editingController: _controller.emailController, hintText: "Digite seu e-mail*", isEmail: true, showErrorInput: _controller.showEmailError.value,)
+              child: TextFieldWidget(editingController: _controller.emailController, labelText: "E-mail*", hintText: "exemplo@email.com", isEmail: true, showErrorInput: _controller.showEmailError.value,fieldRequirements: _controller.emailRequirementsList.value)
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,12 +34,12 @@ class _BasicDataPartialState extends State<BasicDataPartial> {
                 Container(
                     width: 70,
                     padding: const EdgeInsets.all(0),
-                    child: TextFieldWidget(editingController: _controller.phoneAreaController, hintText: "DDD ",isPhoneArea: true)  
+                    child: TextFieldWidget(editingController: _controller.phoneAreaController, labelText: "DDD ",isPhoneArea: true)  
                   ),
                 Container(
                     width: 265,
                     padding: const EdgeInsets.all(0),
-                    child: TextFieldWidget(editingController: _controller.phoneNumberController, hintText: "Celular",isPhoneNumber: true, isLastField: true),
+                    child: TextFieldWidget(editingController: _controller.phoneNumberController, labelText: "Celular",isPhoneNumber: true, isLastField: true),
                 )
             ],
             )

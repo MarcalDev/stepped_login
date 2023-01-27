@@ -36,12 +36,12 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.fromLTRB(5, 0, 0, 5),
                     child: Text('Usuário', style: AppTextStyles.textFieldTitle),
                   ),                  
-                  TextFieldWidget(hintText: 'Digite seu e-mail', editingController: controller.emailController, isEmail: true),
+                  TextFieldWidget(labelText: 'Digite seu e-mail', editingController: controller.emailController, isEmail: true),
                   const Padding(
                     padding: EdgeInsets.fromLTRB(5, 15, 0, 5),
                     child: Text('Senha',style: AppTextStyles.textFieldTitle)
                   ),
-                  TextFieldWidget(hintText: 'Digite sua senha', editingController: controller.passwordController, isLastField: true, isPassword: true),                
+                  TextFieldWidget(labelText: 'Digite sua senha', editingController: controller.passwordController, isLastField: true, isPassword: true),                
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
