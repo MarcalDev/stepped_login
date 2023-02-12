@@ -64,11 +64,7 @@ class RegisterController extends GetxController{
     progressValue = 0.0.obs;
     showStepIcon = true.obs;
     actualStepIcon = "images/clipboard_image.png".obs;
-    pageController = PageController();
-    showNameError = false.obs;
-    showEmailError = false.obs;
-    showPasswordError = false.obs;
-    showSecondPasswordError = false.obs;
+    pageController = PageController();    
     passwordRequirementsList = List<String>.empty().obs;
     secondPasswordRequirementsList = List<String>.empty().obs;
     nameRequirementsList = List<String>.empty().obs;
@@ -77,17 +73,33 @@ class RegisterController extends GetxController{
 
   _addListeners(){
     emailController.addListener(() {
-      if(emailController.text !=null && emailController.text != ""){
-        emailRequirementsList.clear();
+      if(emailController.text !=null && emailController.text != ""){        
         validateEmailTextInput();
       }
     });
 
     nameController.addListener(() {
-      if(nameController.text !=null && nameController.text != ""){
-        nameRequirementsList.clear();
+      if(nameController.text !=null && nameController.text != ""){        
         validateNameTextInput();
       }
+    });
+
+    passwordController.addListener(() {
+      if(passwordController.text !=null && passwordController.text != ""){        
+        validatePassword();
+      }
+    });
+
+    secondPasswordController.addListener(() {
+      if(secondPasswordController.text !=null && secondPasswordController.text != ""){        
+        validatePassword();
+      }
+    });
+  }
+
+  openPopup(Widget popup) async{
+    await showDialog(context: context, builder: (BuildContext context) {
+      return popup;
     });
   }
 
@@ -99,20 +111,19 @@ class RegisterController extends GetxController{
       if(cameraPermission.isGranted){
         selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.camera);
       }else{
-        await showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Autorize o uso da câmera para tirar fotos");}); 
+        await openPopup(ErrorPopup(popupText: "Autorize o uso da câmera para tirar fotos")); 
       }
     }else{
       var galleryPermission = await Permission.storage.request();
       if(galleryPermission.isGranted){
         selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
       }else{
-        await showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Autorize o uso da galeria para importar fotos");}); 
+        await openPopup(ErrorPopup(popupText: "Autorize o uso da galeria para importar fotos")); 
       }      
     }
-      //setProfilePicture(File(selectedFile!.path));
       profilePicturePath.value = selectedFile!.path;
       showPicture.value = true;
-      //setShowPicture(true);
+      
       update();
   }
 
@@ -140,17 +151,17 @@ class RegisterController extends GetxController{
     var connection = await Connectivity().checkConnectivity();
 
     if(connection == ConnectivityResult.none){
-      await showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Verifique sua conexão à internet");});  
+      await openPopup(ErrorPopup(popupText: "Verifique sua conexão à internet"));  
       LoadingIndicatorDialog().dismiss();    
     }else{
       var result = await userService.postUser(user);
       LoadingIndicatorDialog().dismiss();
       if(result){
-        showDialog(context: context, builder: (BuildContext context) {return SuccessPopup(popupText: "Usuário cadastrado com sucesso!",);})
+        openPopup(SuccessPopup(popupText: "Usuário cadastrado com sucesso!",))
         .then((_) => Navigator.of(context).popUntil((route) => route.isFirst));
         
       }else{
-        showDialog(context: context, builder: (BuildContext context) {return ErrorPopup(popupText: "Não foi possível cadastrar o usuário",);});
+        openPopup(ErrorPopup(popupText: "Não foi possível cadastrar o usuário",));
       }   
     }    
   }
@@ -176,9 +187,6 @@ class RegisterController extends GetxController{
 // Check if it is able to move to next page
   checkNextPage(){
     if(partialIndex.value == 0){
-      nameRequirementsList.clear();
-      emailRequirementsList.clear();
-      
       if(!validateEmptyText(nameController.text, false) || !validateEmptyText(emailController.text, true)){
         validateNameTextInput();
         validateEmailTextInput();          
@@ -186,29 +194,17 @@ class RegisterController extends GetxController{
         nextPage();
       } 
 
-    }else{
-      showPasswordError.value = passwordController.text.isEmpty;
-      showSecondPasswordError.value = secondPasswordController.text.isEmpty;
-      passwordRequirementsList.clear(); 
-      secondPasswordRequirementsList.clear();
-      if(passwordController.text.isNotEmpty && secondPasswordController.text.isNotEmpty){         
+    }else{        
         if(validatePassword()){
-          if(passwordController.text != secondPasswordController.text){
-            secondPasswordRequirementsList.add('As senhas informadas devem ser iguais');
-            showSecondPasswordError.value = true;
-            secondPasswordController.text = "";
-          }else{
-              passwordRequirementsList.clear();
-              nextPage();
-          }
-        }   
-      }
+          nextPage();
+        }         
     }
   }
 
   // INPUT VALIDATORS
 
   void validateEmailTextInput(){
+    emailRequirementsList.clear();
     if(!validateEmptyText(emailController.text, true)){
       if(emailController.text.isNotEmpty){
         emailRequirementsList.add('Insira um e-mail válido');
@@ -219,6 +215,7 @@ class RegisterController extends GetxController{
   }
 
   void validateNameTextInput(){
+    nameRequirementsList.clear();
     if(!validateEmptyText(nameController.text, false)){
       if(nameController.text.isNotEmpty){
         nameRequirementsList.add('Insira um nome válido');
@@ -228,32 +225,40 @@ class RegisterController extends GetxController{
     }
   }
 
-
   bool validatePassword(){
+    passwordRequirementsList.clear(); 
+    secondPasswordRequirementsList.clear();     
+    
     var validPassword = true;
-    showPasswordError.value = false;
-    showSecondPasswordError.value = false;
     var specialCaracters = ['@', '.', '-', '_','#'];
+    
+    if(passwordController.text.isEmpty){  
+      passwordRequirementsList.add('Obrigatório*'); 
+    }
+    if(secondPasswordController.text.isEmpty){
+      secondPasswordRequirementsList.add('Obrigatório*'); 
+    }
     if(passwordController.text.length < 8){
-      passwordRequirementsList.add('A senha deve conter ao menos 8 caracteres');
-      showPasswordError.value = true;
+      passwordRequirementsList.add('A senha deve conter ao menos 8 caracteres');      
       validPassword = false;
     }
     if(!passwordController.text.contains(RegExp(r'[A-Z]'))){
-      passwordRequirementsList.add('A senha deve conter ao menos 1 letra maiuscula');
-      showPasswordError.value = true;
+      passwordRequirementsList.add('A senha deve conter ao menos 1 letra maiuscula');      
       validPassword = false;
     }
     if(!passwordController.text.contains(RegExp(r'[0-9]'))){
-      passwordRequirementsList.add('A senha deve conter ao menos 1 número');
-      showPasswordError.value = true;
+      passwordRequirementsList.add('A senha deve conter ao menos 1 número');      
       validPassword = false;
     }
     if(!passwordController.text.contains(RegExp(specialCaracters.toString()))){
-      passwordRequirementsList.add('A senha deve conter ao menos 1 caracter especial');
-      showPasswordError.value = true;
+      passwordRequirementsList.add('A senha deve conter ao menos 1 caracter especial');      
       validPassword = false;
     }
+    if(validPassword){
+      if(passwordController.text != secondPasswordController.text){
+        secondPasswordRequirementsList.add('As senhas informadas devem ser iguais');
+      }
+    } 
     return validPassword;
   }
 
