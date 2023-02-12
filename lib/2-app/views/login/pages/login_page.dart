@@ -13,10 +13,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+ 
+  @override
+  void initState() {
+    super.initState();
+    //FocusScope.of(context).unfocus();
+  }
+ 
   @override
   Widget build(BuildContext context) {
     LoginController controller = Get.put(LoginController(context:  context));   
-    return Scaffold(
+    return GestureDetector(
+      onTap: FocusScope.of(context).unfocus,
+      child: Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(32),
@@ -36,12 +45,12 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.fromLTRB(5, 0, 0, 5),
                     child: Text('Usuário', style: AppTextStyles.textFieldTitle),
                   ),                  
-                  TextFieldWidget(labelText: 'Digite seu e-mail', editingController: controller.emailController, isEmail: true),
+                  TextFieldWidget(hintText: 'Digite seu e-mail', editingController: controller.emailController, isEmail: true, showLabel: false),
                   const Padding(
                     padding: EdgeInsets.fromLTRB(5, 15, 0, 5),
                     child: Text('Senha',style: AppTextStyles.textFieldTitle)
                   ),
-                  TextFieldWidget(labelText: 'Digite sua senha', editingController: controller.passwordController, isLastField: true, isPassword: true),                
+                  TextFieldWidget(hintText: 'Digite sua senha', editingController: controller.passwordController, isLastField: true, isPassword: true, showLabel: false),                
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -73,15 +82,22 @@ class _LoginPageState extends State<LoginPage> {
       ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(15),
         child: GestureDetector(
           onTap: () => controller.pushToRegisterPage(),
           child: Container(
-            padding: const EdgeInsets.all(8),
-            child:const Text("Não possui uma conta? Cadastre-se", textAlign: TextAlign.center, style: AppTextStyles.textDescription),
+            padding: const EdgeInsets.all(15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Não possui uma conta? ", textAlign: TextAlign.center, style: AppTextStyles.textDescription),
+                Text("Cadastre-se", textAlign: TextAlign.center, style: AppTextStyles.textHyperlink),
+              ],
+            )
           )
         )
       )
+    )
     );
   }
 }

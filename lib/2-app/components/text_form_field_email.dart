@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
+import 'package:stepped_login/2-app/views/stylePages/app_text_styles.dart';
+
+import '../views/stylePages/app_borders.dart';
+
+class TextFormFieldEmailWidget extends StatefulWidget {
+    const TextFormFieldEmailWidget({
+    this.hintText = "",
+    required this.editingController,
+    this.isLastField = false,
+    this.fieldRequirements = const [],
+    this.labelText = '',
+    super.key
+    });
+    final String hintText;
+    final String labelText;
+    final TextEditingController editingController;   
+    final bool isLastField;
+    final List<String>? fieldRequirements;
+
+  @override
+  State<TextFormFieldEmailWidget> createState() => _TextFormFieldEmailWidgetState();
+}
+
+class _TextFormFieldEmailWidgetState extends State<TextFormFieldEmailWidget> {
+  @override
+  Widget build(BuildContext context) {
+    bool showRequirementsList = widget.fieldRequirements!.isNotEmpty;
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child:  Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          autocorrect: false,
+          decoration: InputDecoration(        
+            hintText: widget.hintText,
+            hintStyle: TextStyle(color: AppColors.inputHintColor),
+            enabledBorder: AppBorders.textInputBorder,
+            focusedBorder: AppBorders.textInputBorder,
+            errorBorder: AppBorders.textInputBorderError,
+            focusedErrorBorder: AppBorders.textInputBorderError,
+            fillColor: Colors.white,
+            filled:true,
+            hoverColor: AppColors.inputBackgroundColor,
+            floatingLabelBehavior: (widget.labelText != null) ? FloatingLabelBehavior.auto : FloatingLabelBehavior.never,
+            labelText: widget.labelText,
+            labelStyle: TextStyle(color: AppColors.inputTextColor, backgroundColor: Colors.transparent),            
+          ),
+        keyboardType: TextInputType.emailAddress,  
+        controller: widget.editingController,
+        cursorColor: AppColors.thirdColor,
+        textAlign: TextAlign.left,
+        textInputAction: (widget.isLastField) ? TextInputAction.done : TextInputAction.next,     
+        validator: (_) {return (showRequirementsList) ? widget.fieldRequirements![0] : null;},
+        autovalidateMode: AutovalidateMode.always,
+        ),        
+      ],
+    )
+    );
+  }
+}

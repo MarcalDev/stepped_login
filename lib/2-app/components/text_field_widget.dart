@@ -14,7 +14,8 @@ class TextFieldWidget extends StatefulWidget {
     this.isLastField = false,
     this.showErrorInput = false,
     this.fieldRequirements = const [],
-    required this.labelText,
+    this.labelText = '',
+    this.showLabel = true,
     super.key
     });
     String hintText;
@@ -27,6 +28,7 @@ class TextFieldWidget extends StatefulWidget {
     bool isLastField;
     bool showErrorInput;
     List<String> fieldRequirements;
+    bool showLabel;
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -57,7 +59,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       child:  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextField(      
+        TextField(    
+          autofocus: false,
+          autocorrect: false,
           decoration: InputDecoration(        
             hintText: (!widget.isPhoneArea && !widget.isPhoneNumber) ? widget.hintText : ((widget.isPhoneArea)? "(00)" : "9999-999"),
             hintStyle: TextStyle(color:  AppColors.inputHintColor),
@@ -67,8 +71,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             isDense: false,
             filled:true,
             hoverColor: AppColors.inputBackgroundColor,
-            floatingLabelBehavior: FloatingLabelBehavior.auto,
-            labelText: widget.labelText,
+            floatingLabelBehavior: (widget.showLabel) ? FloatingLabelBehavior.auto : FloatingLabelBehavior.never,
+            labelText: (widget.showLabel) ? widget.labelText : null,
             labelStyle: TextStyle(color: labelColor, backgroundColor: Colors.transparent),
             suffixIcon: (widget.isPassword)
                         ? IconButton(

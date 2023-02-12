@@ -44,6 +44,7 @@ class RegisterController extends GetxController{
 
   RegisterController({required this.context}){
     _initializeVariables();
+    _addListeners();
   }
 
   _initializeVariables(){
@@ -74,6 +75,23 @@ class RegisterController extends GetxController{
     emailRequirementsList = List<String>.empty().obs;
   }
 
+  _addListeners(){
+    emailController.addListener(() {
+      if(emailController.text !=null && emailController.text != ""){
+        emailRequirementsList.clear();
+        validateEmailTextInput();
+      }
+    });
+
+    nameController.addListener(() {
+      if(nameController.text !=null && nameController.text != ""){
+        nameRequirementsList.clear();
+        validateNameTextInput();
+      }
+    });
+  }
+
+  // Open camera/gallery
   Future takePicture(bool openCamera) async{
     PickedFile? selectedFile; 
     if(openCamera){
@@ -98,12 +116,14 @@ class RegisterController extends GetxController{
       update();
   }
 
+  // Open permission popup
   getPermissionStatus() async{
     await Permission.camera.request();
 
     return await Permission.camera.status;    
   }
-
+  
+  // Insert of user in api Database
   postUser() async{
     const uui = Uuid();
     User user = User(
@@ -144,6 +164,7 @@ class RegisterController extends GetxController{
     }     
   }  
 
+  // Check if it is able to move to previous page
   checkBackPage(){       
       partialIndex.value = partialIndex.value - 1;
       progressValue.value -= 0.33;   
@@ -152,28 +173,19 @@ class RegisterController extends GetxController{
       pageController.jumpToPage(partialIndex.value);
   }
 
+// Check if it is able to move to next page
   checkNextPage(){
     if(partialIndex.value == 0){
       nameRequirementsList.clear();
       emailRequirementsList.clear();
+      
       if(!validateEmptyText(nameController.text, false) || !validateEmptyText(emailController.text, true)){
-        if(!validateEmptyText(nameController.text, false)){
-          if(nameController.text.isNotEmpty){
-            nameRequirementsList.add('Insira um nome válido');
-          }          
-          showNameError.value = true;          
-        }
-        if(!validateEmptyText(emailController.text, true)){
-          if(emailController.text.isNotEmpty){
-            emailRequirementsList.add('Insira um e-mail válido');
-          }          
-          showEmailError.value = true;   
-        }
-      }else{
-          showNameError.value = false;
-          showEmailError.value = false;
-          nextPage();
-        } 
+        validateNameTextInput();
+        validateEmailTextInput();          
+      } else{
+        nextPage();
+      } 
+
     }else{
       showPasswordError.value = passwordController.text.isEmpty;
       showSecondPasswordError.value = secondPasswordController.text.isEmpty;
@@ -193,6 +205,29 @@ class RegisterController extends GetxController{
       }
     }
   }
+
+  // INPUT VALIDATORS
+
+  void validateEmailTextInput(){
+    if(!validateEmptyText(emailController.text, true)){
+      if(emailController.text.isNotEmpty){
+        emailRequirementsList.add('Insira um e-mail válido');
+      }else{
+        emailRequirementsList.add('Obrigatório*'); 
+      }
+    }      
+  }
+
+  void validateNameTextInput(){
+    if(!validateEmptyText(nameController.text, false)){
+      if(nameController.text.isNotEmpty){
+        nameRequirementsList.add('Insira um nome válido');
+      }else{
+        nameRequirementsList.add('Obrigatório');
+      }
+    }
+  }
+
 
   bool validatePassword(){
     var validPassword = true;
@@ -222,9 +257,9 @@ class RegisterController extends GetxController{
     return validPassword;
   }
 
-  bool validateEmptyText(String text, bool isPassword){
+  bool validateEmptyText(String text, bool isEmail){
     var actualText = text.trim();
-    if(isPassword){
+    if(isEmail){
       if(!actualText.contains('@') || !actualText.contains('.')){
         return false;
       }
@@ -243,5 +278,7 @@ class RegisterController extends GetxController{
     actualStepIcon.value = (partialIndex.value >= 1) ? "images/lock_image.png" : "images/clipboard_image.png";
     pageController.jumpToPage(partialIndex.value);
   }
+
+
   
 }
