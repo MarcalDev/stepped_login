@@ -6,16 +6,20 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:stepped_login/1-base/models/user.dart';
 import 'package:stepped_login/1-base/services/user_service.dart';
 import 'package:stepped_login/2-app/controllers/loading_indicator_dialog.dart';
+import 'package:stepped_login/2-app/helpers/app_permissions.dart';
+import 'package:stepped_login/2-app/helpers/app_validations.dart';
 import 'package:stepped_login/2-app/views/popups/error_popup.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/basic_data_partial.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/password_partial.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/profile_pic_partial.dart';
 import 'package:uuid/uuid.dart';
 import '../views/popups/success_popup.dart';
-class RegisterController extends GetxController{
+import 'base_controller.dart';
+class RegisterController extends GetxController with BaseController{
 
   late BuildContext context;
   late TextEditingController emailController;
+  late String nameText;
   late TextEditingController nameController;
   late TextEditingController phoneAreaController;
   late TextEditingController phoneNumberController;
@@ -49,6 +53,7 @@ class RegisterController extends GetxController{
 
   _initializeVariables(){
     emailController = TextEditingController();
+    nameText = "";
     nameController = TextEditingController();
     phoneAreaController = TextEditingController();
     phoneNumberController = TextEditingController();
@@ -72,16 +77,25 @@ class RegisterController extends GetxController{
   }
 
   _addListeners(){
-    emailController.addListener(() {
+    emailController.addListener(() async{
       if(emailController.text !=null && emailController.text != ""){        
-        validateEmailTextInput();
+        emailRequirementsList.clear();
+        emailRequirementsList.value = AppValidations.validateEmailTextInput(emailController);
+        if(emailRequirementsList.value.isEmpty){
+          var result = await userService.checkAlredyUsedEmail(emailController.text);
+          if(result){
+            emailRequirementsList.add("Este e-mail já está em uso");
+          }
+        }
       }
     });
 
     nameController.addListener(() {
-      if(nameController.text !=null && nameController.text != ""){        
-        validateNameTextInput();
-      }
+      if(nameController.text != nameText){
+        nameText = nameController.text;
+        nameRequirementsList.clear();
+        nameRequirementsList.value = AppValidations.validateTextInput(nameController);
+      }      
     });
 
     passwordController.addListener(() {
@@ -97,25 +111,18 @@ class RegisterController extends GetxController{
     });
   }
 
-  openPopup(Widget popup) async{
-    await showDialog(context: context, builder: (BuildContext context) {
-      return popup;
-    });
-  }
-
   // Open camera/gallery
   Future takePicture(bool openCamera) async{
     PickedFile? selectedFile; 
     if(openCamera){
-      var cameraPermission = await Permission.camera.request();
-      if(cameraPermission.isGranted){
+      if(await AppPermissions.getCameraPermission() == PermissionStatus.granted){
         selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.camera);
       }else{
         await openPopup(ErrorPopup(popupText: "Autorize o uso da câmera para tirar fotos")); 
       }
+
     }else{
-      var galleryPermission = await Permission.storage.request();
-      if(galleryPermission.isGranted){
+      if(await AppPermissions.getStoragePermission() == PermissionStatus.granted){
         selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
       }else{
         await openPopup(ErrorPopup(popupText: "Autorize o uso da galeria para importar fotos")); 
@@ -185,15 +192,19 @@ class RegisterController extends GetxController{
   }
 
 // Check if it is able to move to next page
-  checkNextPage(){
+  checkNextPage() async{
     if(partialIndex.value == 0){
-      if(!validateEmptyText(nameController.text, false) || !validateEmptyText(emailController.text, true)){
-        validateNameTextInput();
-        validateEmailTextInput();          
-      } else{
-        nextPage();
-      } 
+      emailRequirementsList.value = AppValidations.validateEmailTextInput(emailController);
+      nameRequirementsList.value = AppValidations.validateTextInput(nameController);
 
+      if(emailRequirementsList.isEmpty && nameRequirementsList.isEmpty) {
+         var result = await userService.checkAlredyUsedEmail(emailController.text);
+          if(result){
+            emailRequirementsList.add("Este e-mail já está em uso");
+          }else{
+            nextPage();
+          }        
+      } 
     }else{        
         if(validatePassword()){
           nextPage();
@@ -202,29 +213,6 @@ class RegisterController extends GetxController{
   }
 
   // INPUT VALIDATORS
-
-  void validateEmailTextInput(){
-    emailRequirementsList.clear();
-    if(!validateEmptyText(emailController.text, true)){
-      if(emailController.text.isNotEmpty){
-        emailRequirementsList.add('Insira um e-mail válido');
-      }else{
-        emailRequirementsList.add('Obrigatório*'); 
-      }
-    }      
-  }
-
-  void validateNameTextInput(){
-    nameRequirementsList.clear();
-    if(!validateEmptyText(nameController.text, false)){
-      if(nameController.text.isNotEmpty){
-        nameRequirementsList.add('Insira um nome válido');
-      }else{
-        nameRequirementsList.add('Obrigatório');
-      }
-    }
-  }
-
   bool validatePassword(){
     passwordRequirementsList.clear(); 
     secondPasswordRequirementsList.clear();     
@@ -262,20 +250,6 @@ class RegisterController extends GetxController{
     return validPassword;
   }
 
-  bool validateEmptyText(String text, bool isEmail){
-    var actualText = text.trim();
-    if(isEmail){
-      if(!actualText.contains('@') || !actualText.contains('.')){
-        return false;
-      }
-    }
-    if (actualText.isNotEmpty){
-      return true;
-    }else{
-      return false;
-    }
-  }
-
   nextPage(){
     partialIndex.value = partialIndex.value + 1;
     progressValue.value += 0.33; 
@@ -283,7 +257,4 @@ class RegisterController extends GetxController{
     actualStepIcon.value = (partialIndex.value >= 1) ? "images/lock_image.png" : "images/clipboard_image.png";
     pageController.jumpToPage(partialIndex.value);
   }
-
-
-  
 }

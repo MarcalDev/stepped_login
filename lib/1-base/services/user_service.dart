@@ -62,7 +62,19 @@ class UserService extends ServiceBase{
     }catch(ex){
       //print("excessao: " + ex.toString());
       return false;
-    }    
+    }   
+  }
 
+  Future<bool> checkAlredyUsedEmail(String email) async{
+    try{
+      final response = await http.get(
+        Uri.parse(
+          "$baseUrl/api/User/checkAlredyUsedEmail?email=$email"
+        ));
+        
+      return response.body == "true";
+    }catch(ex){
+      return false;
+    }
   }
 }

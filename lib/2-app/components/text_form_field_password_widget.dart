@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
-import 'package:stepped_login/2-app/views/stylePages/app_text_styles.dart';
 
 import '../views/stylePages/app_borders.dart';
 
