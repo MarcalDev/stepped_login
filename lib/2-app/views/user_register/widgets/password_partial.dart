@@ -19,7 +19,8 @@ class _PasswordPartialState extends State<PasswordPartial> {
     return Container(
       child: Center(
         child: Obx(() => 
-          Column(
+          Form(
+            child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
@@ -28,7 +29,8 @@ class _PasswordPartialState extends State<PasswordPartial> {
             TextFormFieldPasswordWidget(editingController: _controller.secondPasswordController, labelText: "Repita a senha*",isLastField: true, fieldRequirements: _controller.secondPasswordRequirementsList.value),                  
           ],
         )
-      
+
+          )      
         ) 
         ),
     );

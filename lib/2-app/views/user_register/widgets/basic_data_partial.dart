@@ -21,34 +21,37 @@ class _BasicDataPartialState extends State<BasicDataPartial> {
     return Container(
       padding: const EdgeInsets.all(0),
       child: Obx(() => 
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TextFormFieldWidget(editingController: _controller.nameController, labelText: "Nome*", hintText: "Digite seu nome",fieldRequirements: _controller.nameRequirementsList.value),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
-              child: TextFormFieldEmailWidget(editingController: _controller.emailController, labelText: "E-mail*", hintText: "exemplo@email.com", fieldRequirements: _controller.emailRequirementsList.value)
-              //TextFieldWidget(editingController: _controller.emailController, labelText: "E-mail*", hintText: "exemplo@email.com", isEmail: true, showErrorInput: _controller.showEmailError.value,fieldRequirements: _controller.emailRequirementsList.value)
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Form(          
+          child: 
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                    width: 70,
-                    padding: const EdgeInsets.all(0),
-                    child: TextFieldWidget(editingController: _controller.phoneAreaController, labelText: "DDD ",isPhoneArea: true)  
-                  ),
-                Container(
-                    width: 265,
-                    padding: const EdgeInsets.all(0),
-                    child: TextFieldWidget(editingController: _controller.phoneNumberController, labelText: "Celular",isPhoneNumber: true, isLastField: true),
+                TextFormFieldWidget(editingController: _controller.nameController, labelText: "Nome*", hintText: "Digite seu nome",fieldRequirements: _controller.nameRequirementsList.value),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+                  child: TextFormFieldEmailWidget(editingController: _controller.emailController, labelText: "E-mail*", hintText: "exemplo@email.com", fieldRequirements: _controller.emailRequirementsList.value)
+                  //TextFieldWidget(editingController: _controller.emailController, labelText: "E-mail*", hintText: "exemplo@email.com", isEmail: true, showErrorInput: _controller.showEmailError.value,fieldRequirements: _controller.emailRequirementsList.value)
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        width: 70,
+                        padding: const EdgeInsets.all(0),
+                        child: TextFieldWidget(editingController: _controller.phoneAreaController, labelText: "DDD ",isPhoneArea: true)  
+                      ),
+                    Container(
+                        width: 265,
+                        padding: const EdgeInsets.all(0),
+                        child: TextFieldWidget(editingController: _controller.phoneNumberController, labelText: "Celular",isPhoneNumber: true, isLastField: true),
+                    )
+                ],
                 )
-            ],
-            )
-          ],
-          )    
-      )
+              ],
+              )    
+          )
+        )
       );
   }
 }

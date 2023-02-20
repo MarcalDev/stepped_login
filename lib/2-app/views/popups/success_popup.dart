@@ -4,11 +4,11 @@ import '../stylePages/app_button_styles.dart';
 import '../stylePages/app_text_styles.dart';
 
 class SuccessPopup extends StatefulWidget {
-  SuccessPopup({
+  const SuccessPopup({
     super.key,
     required this.popupText
     });
-  String popupText;
+  final String popupText;
 
   @override
   State<SuccessPopup> createState() => _SuccessPopupState();

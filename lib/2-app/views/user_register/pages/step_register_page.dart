@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stepped_login/2-app/controllers/register_controller.dart';
 import 'package:get/get.dart';
+import 'package:stepped_login/2-app/helpers/app_enums.dart';
+import 'package:stepped_login/2-app/views/popups/two_options_popup.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
-
-import '../../popups/two_options_popup.dart';
 
 class StepRegisterPage extends StatefulWidget {
   const StepRegisterPage({Key? key}) : super(key: key);
@@ -20,13 +20,15 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
       onWillPop: () async => await showDialog(context: context, builder: (BuildContext context) {return const TwoOptionsPopup();}),
       child: Scaffold(
         extendBodyBehindAppBar: false,
-        backgroundColor: Colors.white,
-        body: Padding(
+        backgroundColor: Colors.white,                 
+        body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Padding(
           padding: const EdgeInsets.all(32),
-          child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Padding(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+               Padding(
                       padding: const EdgeInsets.fromLTRB(0, 30, 0, 50),
                       child: Obx(
                         () => TweenAnimationBuilder<double>(
@@ -41,22 +43,26 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
                       ),                   
                       )                    
                   ),
+                  Expanded(
+                    child: ListView(       
+                      physics: BouncingScrollPhysics(),
+                children: <Widget>[                  
                   Obx(() => 
                     (Controller.showStepIcon.value)
                       ? Column(
                     children: [
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-                          child: Container(
-                            height: 150,
-                            margin: const EdgeInsets.all(0),
-                            decoration: BoxDecoration(
-                                color: AppColors.thirdColor,
-                                shape: BoxShape.circle,
-                                image: DecorationImage(image: AssetImage(Controller.actualStepIcon.value))
-                            ),
-                          )
-                      ),
+                      // Padding(
+                      //     padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                      //     child: Container(
+                      //       height: 150,
+                      //       margin: const EdgeInsets.all(0),
+                      //       decoration: BoxDecoration(
+                      //           color: AppColors.thirdColor,
+                      //           shape: BoxShape.circle,
+                      //           image: DecorationImage(image: AssetImage(Controller.actualStepIcon.value))
+                      //       ),
+                      //     )
+                      // ),
                       const Padding(
                           padding: EdgeInsets.fromLTRB(0, 45, 0, 30),
                           child: Text("Preencha as informações abaixo:")
@@ -84,8 +90,12 @@ class _StepRegisterPageState extends State<StepRegisterPage> {
                   ) 
                 ],
               ),
+            
+                  )
+            ],
             )
           ),
+        ),
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.fromLTRB(32,0,32,32),
             child: Obx(

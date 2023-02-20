@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
 
-class LoadingIndicatorDialog{
+import 'base_controller.dart';
+
+class LoadingIndicatorDialog with BaseController{
   static final LoadingIndicatorDialog _singleton = LoadingIndicatorDialog._internal();
   late BuildContext _context;
   bool isDisplayed = false;

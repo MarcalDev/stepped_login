@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stepped_login/2-app/components/text_field_widget.dart';
+import 'package:stepped_login/2-app/components/text_form_field_email.dart';
+import 'package:stepped_login/2-app/components/text_form_field_password_widget.dart';
 import 'package:stepped_login/2-app/controllers/login_controller.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_text_styles.dart';
@@ -17,7 +19,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    //FocusScope.of(context).unfocus();
   }
  
   @override
@@ -25,32 +26,28 @@ class _LoginPageState extends State<LoginPage> {
     LoginController controller = Get.put(LoginController(context:  context));   
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
-      child: Scaffold(
+      child: Scaffold(        
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        mainAxisSize: MainAxisSize.max,
         children: [
-          Container(  
-            child: Padding(
-              padding: const EdgeInsets.all(0),
-              child: Column(
+          ListView(
+              physics: BouncingScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.all(32),
+              children: [
+                Obx(
+                  () => Form(                
+                child: Column(                
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 0, 5),
-                    child: Text('Usuário', style: AppTextStyles.textFieldTitle),
-                  ),                  
-                  TextFieldWidget(hintText: 'Digite seu e-mail', editingController: controller.emailController, isEmail: true, showLabel: false),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(5, 15, 0, 5),
-                    child: Text('Senha',style: AppTextStyles.textFieldTitle)
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [                  
+                  TextFormFieldEmailWidget(labelText: "E-mail*", editingController: controller.emailController, hintText: "exemplo@email.com", fieldRequirements: controller.emailRequirementsList.value),
+                  Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: TextFormFieldPasswordWidget(editingController: controller.passwordController, labelText: "Digite sua senha*", fieldRequirements: controller.passwordRequirementsList.value),
                   ),
-                  TextFieldWidget(hintText: 'Digite sua senha', editingController: controller.passwordController, isLastField: true, isPassword: true, showLabel: false),                
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -59,11 +56,22 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   )
                 ],
+                ),
+              ),
+
+                )
+              ],
             ),
-            )
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 120),
+          
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+            padding: EdgeInsets.fromLTRB(17,17,17,17),
             width: double.infinity,
             child: TextButton(
               onPressed: () => controller.loginUser(), 
@@ -76,25 +84,22 @@ class _LoginPageState extends State<LoginPage> {
                 alignment: Alignment.center
               ),
               )
-          )
-          
-        ],        
-      ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(15),
-        child: GestureDetector(
-          onTap: () => controller.pushToRegisterPage(),
-          child: Container(
-            padding: const EdgeInsets.all(15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Não possui uma conta? ", textAlign: TextAlign.center, style: AppTextStyles.textDescription),
-                Text("Cadastre-se", textAlign: TextAlign.center, style: AppTextStyles.textHyperlink),
-              ],
+          ),
+            GestureDetector(
+            onTap: () => controller.pushToRegisterPage(),
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Não possui uma conta? ", textAlign: TextAlign.center, style: AppTextStyles.textDescription),
+                  Text("Cadastre-se", textAlign: TextAlign.center, style: AppTextStyles.textHyperlink),
+                ],
+              )
             )
           )
+
+          ],
         )
       )
     )

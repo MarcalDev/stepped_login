@@ -4,11 +4,11 @@ import 'package:stepped_login/2-app/views/stylePages/app_button_styles.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_text_styles.dart';
 
 class ErrorPopup extends StatefulWidget {
-  ErrorPopup({
-    super.key,
-    required this.popupText
+  const ErrorPopup({
+     super.key,
+     required this.popupText
     });
-    String popupText;
+    final String popupText;
 
   @override
   State<ErrorPopup> createState() => _ErrorPopupState();

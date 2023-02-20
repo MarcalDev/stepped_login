@@ -41,9 +41,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     type: MaskAutoCompletionType.lazy
   );
   var phoneAreaFormatter = MaskTextInputFormatter(
-    mask: '( 00 )', 
+    mask: '(00)', 
     filter: { "0": RegExp(r'[0-9]') },
-    type: MaskAutoCompletionType.lazy,    
+    type: MaskAutoCompletionType.eager,    
   );
 
   

@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,6 +5,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:stepped_login/1-base/models/user.dart';
 import 'package:stepped_login/1-base/services/user_service.dart';
 import 'package:stepped_login/2-app/controllers/loading_indicator_dialog.dart';
+import 'package:stepped_login/2-app/helpers/app_enums.dart';
 import 'package:stepped_login/2-app/helpers/app_permissions.dart';
 import 'package:stepped_login/2-app/helpers/app_validations.dart';
 import 'package:stepped_login/2-app/views/popups/error_popup.dart';
@@ -13,7 +13,6 @@ import 'package:stepped_login/2-app/views/user_register/widgets/basic_data_parti
 import 'package:stepped_login/2-app/views/user_register/widgets/password_partial.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/profile_pic_partial.dart';
 import 'package:uuid/uuid.dart';
-import '../views/popups/success_popup.dart';
 import 'base_controller.dart';
 class RegisterController extends GetxController with BaseController{
 
@@ -44,7 +43,6 @@ class RegisterController extends GetxController with BaseController{
   late RxList<String> secondPasswordRequirementsList;
   late RxList<String> nameRequirementsList;
   late RxList<String> emailRequirementsList;
-
 
   RegisterController({required this.context}){
     _initializeVariables();
@@ -118,27 +116,20 @@ class RegisterController extends GetxController with BaseController{
       if(await AppPermissions.getCameraPermission() == PermissionStatus.granted){
         selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.camera);
       }else{
-        await openPopup(ErrorPopup(popupText: "Autorize o uso da câmera para tirar fotos")); 
+        await openPopup(PopupTypeEnum.error, "Autorize o uso da câmera para tirar fotos"); 
       }
 
     }else{
       if(await AppPermissions.getStoragePermission() == PermissionStatus.granted){
         selectedFile = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
       }else{
-        await openPopup(ErrorPopup(popupText: "Autorize o uso da galeria para importar fotos")); 
+        await openPopup(PopupTypeEnum.error, "Autorize o uso da galeria para importar fotos"); 
       }      
     }
       profilePicturePath.value = selectedFile!.path;
       showPicture.value = true;
       
       update();
-  }
-
-  // Open permission popup
-  getPermissionStatus() async{
-    await Permission.camera.request();
-
-    return await Permission.camera.status;    
   }
   
   // Insert of user in api Database
@@ -155,20 +146,19 @@ class RegisterController extends GetxController with BaseController{
     );
     
     LoadingIndicatorDialog().show(context);
-    var connection = await Connectivity().checkConnectivity();
 
-    if(connection == ConnectivityResult.none){
-      await openPopup(ErrorPopup(popupText: "Verifique sua conexão à internet"));  
+    if(await checkConnectivity()){
+      await openPopup(PopupTypeEnum.error,"Verifique sua conexão à internet");  
       LoadingIndicatorDialog().dismiss();    
     }else{
       var result = await userService.postUser(user);
       LoadingIndicatorDialog().dismiss();
       if(result){
-        openPopup(SuccessPopup(popupText: "Usuário cadastrado com sucesso!",))
+        openPopup(PopupTypeEnum.success,"Usuário cadastrado com sucesso!")
         .then((_) => Navigator.of(context).popUntil((route) => route.isFirst));
         
       }else{
-        openPopup(ErrorPopup(popupText: "Não foi possível cadastrar o usuário",));
+        openPopup(PopupTypeEnum.error,"Não foi possível cadastrar o usuário");
       }   
     }    
   }
