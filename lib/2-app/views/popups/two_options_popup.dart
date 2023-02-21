@@ -24,7 +24,7 @@ class _TwoOptionsPopupState extends State<TwoOptionsPopup> {
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          const Text("Deseja cancelar? ", style: AppTextStyles.textPopupTitle),
+          const Text("Deseja sair? ", style: AppTextStyles.textPopupTitle),
           Padding(
             padding: const EdgeInsets.only(top:25, bottom: 10),
             child: Row(
@@ -32,10 +32,10 @@ class _TwoOptionsPopupState extends State<TwoOptionsPopup> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 5),
+                padding: const EdgeInsets.only(right: 15),
                 child: TextButton(
-                  child: Text("SIM", style: AppTextStyles.buttonText),
-                  style: AppButtonStyles.primaryButtonStyle,
+                  child: Text("Sim", style: AppTextStyles.buttonText),
+                  style: AppButtonStyles.errorButtonStyle,
                   onPressed: (){
                     Navigator.pop(context, true);
                   },
@@ -45,8 +45,8 @@ class _TwoOptionsPopupState extends State<TwoOptionsPopup> {
                 onPressed: (){
                     Navigator.pop(context, false);
                   },
-                child: Text("NÃO", style: AppTextStyles.buttonText),
-                style: AppButtonStyles.primaryButtonStyle,
+                child: Text("Cancelar", style: AppTextStyles.buttonSecondaryText),
+                style: AppButtonStyles.secundaryButtonStyle,
                 )
               ],
           )

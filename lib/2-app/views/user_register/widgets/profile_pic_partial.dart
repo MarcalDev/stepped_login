@@ -44,8 +44,7 @@ class _ProfilePicPartialState extends State<ProfilePicPartial> {
                 )              
               )                 
               )
-              )  ,    
-            const Text("Pular"),
+              )  
           ],
         )
       )

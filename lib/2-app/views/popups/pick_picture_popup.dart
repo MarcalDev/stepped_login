@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stepped_login/2-app/controllers/register_controller.dart';
+import 'package:stepped_login/2-app/views/stylePages/app_button_styles.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_text_styles.dart';
 
@@ -24,92 +25,94 @@ class _PickPicturePopupState extends State<PickPicturePopup> {
       content: Container(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          const Text("Anexar foto com", style: AppTextStyles.textPopupTitle),
+          const Text("Selecionar imagem", style: AppTextStyles.textPopupTitle),
           Padding(
-            padding: const EdgeInsets.only(top:10, bottom: 10),
-            child: Row(
+            padding: const EdgeInsets.only(top:25, bottom: 10),
+            child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 15),
-                child: ElevatedButton(       
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonBackgroundColor),
-                  shadowColor: MaterialStateProperty.all<Color>(AppColors.buttonShadowColor),
-                  elevation: MaterialStateProperty.all<double?>(0),
-                  shape: MaterialStateProperty.all<OutlinedBorder>(
-                    const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),)
-                ),
-                onPressed: (){
-                   Controller.takePicture(false);
-                   Navigator.pop(context);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-                  child: Column(    
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,              
-                    children: <Widget>[ 
-                       Container(                        
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(23)),
-                          color: AppColors.thirdColor
-                        ),
-                        padding: const EdgeInsets.all(8),
-                        child: const Icon(Icons.photo_library_rounded, size: 45, color: Colors.white),
-                       ),   
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: Text("Galeria", style: AppTextStyles.textPopupOptions)
-                        )   
-                    ],
-                  )
-                )
-                ),
-              
-              ),
-              ElevatedButton(                
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonBackgroundColor),
-                  shadowColor: MaterialStateProperty.all<Color>(AppColors.buttonShadowColor),
-                  elevation: MaterialStateProperty.all<double?>(0),
-                  shape: MaterialStateProperty.all<OutlinedBorder>(
-                    const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),)
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 15, 15, 15),
-                  child: Column(      
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,            
-                    children: <Widget>[   
-                      Container(                        
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(23)),
-                          color: AppColors.thirdColor
-                        ),
-                        padding: const EdgeInsets.all(8),
-                        child: const Icon(Icons.camera_alt, size: 45, color: Colors.white),
+                padding: const EdgeInsets.only(bottom: 15),
+                child:
+                ElevatedButton(
+                  style: ButtonStyle(
+                    shadowColor: MaterialStateProperty.all<Color>(AppColors.buttonShadowColor),  
+                    fixedSize: MaterialStateProperty.all<Size>(Size(180,55)),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+                      side: BorderSide(
+                      color: AppColors.thirdColor,
+                      width: 1,
+                      style: BorderStyle.solid
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: Text("Câmera", style: AppTextStyles.textPopupOptions)
-                        )                      
+                      borderRadius: BorderRadius.circular(8)
+                    )),
+                    backgroundColor: MaterialStateProperty.all<Color>(AppColors.thirdColor),
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.fromLTRB(15, 10, 15, 10)),
+                    textStyle: MaterialStateProperty.all<TextStyle>(AppTextStyles.buttonText), 
+                    elevation: MaterialStateProperty.all<double>(0),
+                    alignment: Alignment.center
+                  ),
+                  onPressed: () {
+                    Controller.takePicture(false);
+                    Navigator.pop(context);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.only(right: 8),
+                        child: Icon(Icons.photo_library_rounded, size: 20, color: Colors.white)
+                      ),
+                      Text(
+                        "Galeria",
+                        style: AppTextStyles.buttonText,
+                      )
                     ],
-                  )
-                ),
-                onPressed: () {
-                  Controller.takePicture(true);
-                  Navigator.pop(context);
-                } ,                                
-                ),
-            ],
+                  ),
+                ) ,
+              ),
+              ElevatedButton(
+                  style: ButtonStyle(    
+                    shadowColor: MaterialStateProperty.all<Color>(AppColors.buttonShadowColor),                  
+                    fixedSize: MaterialStateProperty.all<Size>(Size(180,55)),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+                      side: BorderSide(
+                      color: AppColors.inputHintColor,
+                      width: 1,
+                      style: BorderStyle.solid
+                      ),
+                      borderRadius: BorderRadius.circular(8)
+                    )),
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.white),                
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.fromLTRB(15, 10, 15, 10)),
+                    textStyle: MaterialStateProperty.all<TextStyle>(AppTextStyles.buttonText), 
+                    elevation: MaterialStateProperty.all<double>(0),
+                    alignment: Alignment.center
+                  ),
+                  onPressed: () {
+                    Controller.takePicture(true);
+                    Navigator.pop(context);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 8),
+                        child: Icon(Icons.camera_alt, size: 20, color: AppColors.buttonTextColor)
+                      ),
+                      Text(
+                        "Câmera",
+                        style: AppTextStyles.buttonSecondaryText,
+                      )
+                    ],
+                  ),
+                ) ,
+                            ],
           )
           )
         ]

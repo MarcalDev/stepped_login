@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(        
       backgroundColor: Colors.white,
-      body: Column(
+      body: Column(        
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           ListView(
@@ -62,29 +62,37 @@ class _LoginPageState extends State<LoginPage> {
                 )
               ],
             ),
-          
-        ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-            padding: EdgeInsets.fromLTRB(17,17,17,17),
+          Container(
+            padding: EdgeInsets.all(32),
             width: double.infinity,
             child: TextButton(
               onPressed: () => controller.loginUser(), 
               child: const Text("ENTRAR", style: AppTextStyles.buttonText),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(AppColors.thirdColor),
+                fixedSize: MaterialStateProperty.all<Size>(Size(125,45)),
                 padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.fromLTRB(15, 10, 15, 10)),
                 textStyle: MaterialStateProperty.all<TextStyle>(AppTextStyles.buttonText), 
                 elevation: MaterialStateProperty.all<double>(0),
-                alignment: Alignment.center
+                alignment: Alignment.center,
+                shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+                  side: BorderSide(
+                  color: AppColors.thirdColor,
+                  width: 1,
+                  style: BorderStyle.solid
+                  ),
+                  borderRadius: BorderRadius.circular(8)
+                )),
               ),
               )
           ),
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [            
             GestureDetector(
             onTap: () => controller.pushToRegisterPage(),
             child: Container(

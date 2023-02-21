@@ -9,6 +9,7 @@ class AppColors{
   static Color thirdPurpleColor = const Color(0xffd7b3cc);
   static Color buttonBackgroundColor = const Color(0xfff6f6f6);
   static Color buttonShadowColor = Colors.white;
+  static Color buttonTextColor = const Color(0xff818181);
   static Color inputHintColor = const Color(0xffB2B2B2);
   static Color inputBackgroundColor = const Color(0xffEAEAEA);
   static Color inputTextColor = const Color(0xff3C4048);

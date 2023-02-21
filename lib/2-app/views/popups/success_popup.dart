@@ -32,11 +32,13 @@ class _SuccessPopupState extends State<SuccessPopup>
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return Padding(
+      padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+      child: AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      contentPadding: const EdgeInsets.fromLTRB(10,30,10,10),
+      contentPadding: const EdgeInsets.fromLTRB(0,40,0,25),
       content: Container(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
@@ -44,19 +46,20 @@ class _SuccessPopupState extends State<SuccessPopup>
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Image.asset('images/check.png', height: 70),
+          Image.asset('images/check.png', height: 60),
           Padding(
-            padding: const EdgeInsets.only(bottom: 20, top: 15),
-            child: Text(widget.popupText, style: AppTextStyles.textPopupTitle, textAlign: TextAlign.center,) 
+            padding: const EdgeInsets.fromLTRB(15,25,15,20),
+            child: Text(widget.popupText, style: AppTextStyles.textPopupDescription, textAlign: TextAlign.center,) 
             ),
           Container(
-            padding: const EdgeInsets.all(0),
+            padding: const EdgeInsets.fromLTRB(15,0,15,0),
             width: double.infinity,
-            child: TextButton(onPressed: (){Navigator.pop(context);}, child: Text("OK", style: AppTextStyles.buttonText),style: AppButtonStyles.primaryButtonStyle,)
+            child: TextButton(onPressed: (){Navigator.pop(context);}, child: Text("Continuar", style: AppTextStyles.buttonText),style: AppButtonStyles.primaryButtonStyle,)
           )          
         ]
         ),
     )
+    )
     );
- }
+    }
 }
