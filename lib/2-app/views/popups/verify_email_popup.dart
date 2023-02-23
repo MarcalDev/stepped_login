@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:stepped_login/2-app/views/popups/two_options_popup.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_button_styles.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_colors.dart';
 import 'package:stepped_login/2-app/views/stylePages/app_text_styles.dart';
@@ -24,12 +25,17 @@ class _VerifyEmailPopupState extends State<VerifyEmailPopup> {
     if(code != "" && code != widget.Code && code!.length >3)
       return "Código incorreto*";
 
+    if(code != "" && code == widget.Code && code!.length >3)
+      Navigator.pop(context, true);
+
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return WillPopScope(
+      onWillPop: () async => await showDialog(context: context, builder: (BuildContext context) {return const TwoOptionsPopup();}),
+      child: AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
@@ -97,6 +103,7 @@ class _VerifyEmailPopupState extends State<VerifyEmailPopup> {
         )
 
       ),
-    );
+    ), 
+      );
   }
 }

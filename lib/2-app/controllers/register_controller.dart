@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,10 +11,13 @@ import 'package:stepped_login/2-app/helpers/app_enums.dart';
 import 'package:stepped_login/2-app/helpers/app_permissions.dart';
 import 'package:stepped_login/2-app/helpers/app_validations.dart';
 import 'package:stepped_login/2-app/views/popups/error_popup.dart';
+import 'package:stepped_login/2-app/views/popups/verify_email_popup.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/basic_data_partial.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/password_partial.dart';
 import 'package:stepped_login/2-app/views/user_register/widgets/profile_pic_partial.dart';
 import 'package:uuid/uuid.dart';
+import '../helpers/email_sender/email.dart';
+import '../helpers/email_sender/sender_user_data.dart';
 import 'base_controller.dart';
 class RegisterController extends GetxController with BaseController{
 
@@ -43,6 +48,7 @@ class RegisterController extends GetxController with BaseController{
   late RxList<String> secondPasswordRequirementsList;
   late RxList<String> nameRequirementsList;
   late RxList<String> emailRequirementsList;
+  late String generatedCode;
 
   RegisterController({required this.context}){
     _initializeVariables();
@@ -72,6 +78,7 @@ class RegisterController extends GetxController with BaseController{
     secondPasswordRequirementsList = List<String>.empty().obs;
     nameRequirementsList = List<String>.empty().obs;
     emailRequirementsList = List<String>.empty().obs;
+    generatedCode = "";
   }
 
   _addListeners(){
@@ -192,7 +199,12 @@ class RegisterController extends GetxController with BaseController{
           if(result){
             emailRequirementsList.add("Este e-mail já está em uso");
           }else{
-            nextPage();
+            var checkEmail = await _sendEmail();
+            if(checkEmail==true){
+              nextPage();
+            }else{
+            }
+            
           }        
       } 
     }else{        
@@ -246,5 +258,28 @@ class RegisterController extends GetxController with BaseController{
     showStepIcon.value = (partialIndex.value == 2) ? false : true;
     actualStepIcon.value = (partialIndex.value >= 1) ? "images/lock_image.png" : "images/clipboard_image.png";
     pageController.jumpToPage(partialIndex.value);
+  }
+
+  
+  Future<dynamic> _sendEmail() async{
+    var email = Email(SenderUserData.username, SenderUserData.password);
+    
+    var rng = Random();
+    generatedCode = "";
+    for(var i=0; i<4;i++){
+      generatedCode += rng.nextInt(9).toString();
+    }
+    
+    bool result = await email.sendMessage('Código de verificação: $generatedCode', emailController.value.text, 'Verificação de conta');
+    if(result){
+
+      var checkEmail = showDialog(context: context, builder: (BuildContext context) {return VerifyEmailPopup(Email:emailController.value.text, Code:generatedCode);});
+
+      //var checkEmail = openEmailPopup(emailController.value.text, generatedCode);      
+      return checkEmail;
+    }
+
+    return false;
+   
   }
 }

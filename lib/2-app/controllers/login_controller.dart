@@ -25,7 +25,7 @@ class LoginController extends GetxController with BaseController{
   late UserRepository userRepository;
   late RxList<String> emailRequirementsList;
   late RxList<String> passwordRequirementsList;
-  late String generatedCode;
+
 
   LoginController({required this.context}){
     _initializeVariables();
@@ -39,7 +39,7 @@ class LoginController extends GetxController with BaseController{
     userRepository = UserRepository();
     emailRequirementsList = List<String>.empty().obs;
     passwordRequirementsList = List<String>.empty().obs;
-    generatedCode = "";
+
     getSavedUser();
   }
 
@@ -52,7 +52,7 @@ class LoginController extends GetxController with BaseController{
   }
 
   loginUser() async{
-    _sendEmail();
+    
     // try{
     //   emailRequirementsList.value.clear();
     //   passwordRequirementsList.value.clear();
@@ -99,16 +99,4 @@ class LoginController extends GetxController with BaseController{
   }
 
   
-  void _sendEmail() async{
-    var email = Email(SenderUserData.username, SenderUserData.password);
-    
-    var rng = Random();
-    generatedCode = "";
-    for(var i=0; i<4;i++){
-      generatedCode += rng.nextInt(9).toString();
-    }
-    
-    openEmailPopup(emailController.value.text, generatedCode);
-    //bool result = await email.sendMessage('Código de verificação: $generatedCode', emailController.value.text, 'Verificação de conta');
-  }
 }
