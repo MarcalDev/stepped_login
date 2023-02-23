@@ -1,5 +1,6 @@
 enum PopupTypeEnum{
   error,
   success,
-  twoOptions
+  twoOptions,
+  verifyEmail
 }

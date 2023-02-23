@@ -8,9 +8,10 @@ static TextStyle buttonSecondaryText = TextStyle(fontSize: 16, fontWeight: FontW
 static const  TextStyle textFieldTitle = TextStyle(fontSize: 17,fontWeight: FontWeight.w400);
 static const  TextStyle textPopupTitle = TextStyle(fontSize: 18,fontWeight: FontWeight.w500);
 static const  TextStyle textPopupDescription = TextStyle(fontSize: 16);
-static const  TextStyle textPopupOptions = TextStyle(fontSize: 13,fontWeight: FontWeight.w400, color: Colors.black);
+static  TextStyle textPopupOptions = TextStyle(fontSize: 13,fontWeight: FontWeight.w400, color: AppColors.inputHintColor);
 static const  TextStyle textDescription = TextStyle(fontSize: 14,fontWeight: FontWeight.w400);
-static  TextStyle textHyperlink = TextStyle(fontSize: 14,fontWeight: FontWeight.w400, color: AppColors.primaryColor, fontStyle: FontStyle.italic);
+static  TextStyle textHyperlink = TextStyle(fontSize: 13,fontWeight: FontWeight.w400, color: AppColors.inputHintColor, fontStyle: FontStyle.italic, decoration: TextDecoration.underline);
 static TextStyle textLeftError = TextStyle(fontSize: 13,fontWeight: FontWeight.w400, color: AppColors.errorColor);
+static TextStyle codeFielText = TextStyle(fontSize: 22, fontWeight: FontWeight.w500,color: AppColors.primaryColor );
 
 }

@@ -5,6 +5,7 @@ import 'package:stepped_login/2-app/views/popups/two_options_popup.dart';
 
 import '../helpers/app_enums.dart';
 import '../views/popups/success_popup.dart';
+import '../views/popups/verify_email_popup.dart';
 
 class BaseController{
   late BuildContext context;
@@ -18,7 +19,15 @@ class BaseController{
           return ErrorPopup(popupText: popupText!);
         case PopupTypeEnum.twoOptions:
           return const TwoOptionsPopup();
+        default:
+          return SuccessPopup(popupText: popupText!);
       }      
+    });
+  }
+
+  openEmailPopup(String email, String code) async{    
+    await showDialog(context: context, builder: (BuildContext context) {      
+      return VerifyEmailPopup(Email: email,Code: code);           
     });
   }
 
